@@ -167,11 +167,19 @@
 
       encontrados.forEach(campos => {
         const nome = campos[0] || "Sem nome";
-        const local = campos[1] || "Desconhecido";
-        const ano = campos[2] || "Sem data";
+        const pai = campos[1] || "Desconhecido";
+        const mae = campos[2] || "Desconhecida";
+        const ano = campos[3] || "Sem ano";
+        const id = campos[4] || "Sem ID";
         const div = document.createElement("div");
         div.className = "item";
-        div.innerHTML = `<strong>${nome}</strong><br>Local: ${local}<br>Ano: ${ano}`;
+        div.innerHTML = `
+          <strong>${nome}</strong><br>
+          Pai: ${pai}<br>
+          Mãe: ${mae}<br>
+          Ano: ${ano}<br>
+          ID: ${id}
+        `;
         resultados.appendChild(div);
       });
     }
