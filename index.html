@@ -2,21 +2,12 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pesquisa Cremona - Abatti Genealogia</title>
-  <meta name="description" content="Pesquise registros de nascimento em Cremona. Encontre ancestrais italianos com nosso banco de dados genealógico.">
-  <meta property="og:title" content="Pesquisa Cremona - Abatti Genealogia">
-  <meta property="og:description" content="Encontre seus ancestrais italianos em Cremona">
-  <meta property="og:image" content="https://seusite.com/logo.png">
-  
-  <!-- Otimização de carregamento de fontes -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pesquisa Cremona</title>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"></noscript>
-  
-  <!-- Favicon -->
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  
   <style>
+    /* ESTILOS GERAIS */
     :root {
       --primary: #002f5f;
       --secondary: #f9be18;
@@ -40,6 +31,7 @@
       line-height: 1.6;
     }
     
+    /* HEADER */
     header {
       background-color: var(--secondary);
       color: var(--primary);
@@ -55,9 +47,9 @@
       max-height: 80px;
       height: auto;
       width: auto;
-      loading: lazy;
     }
     
+    /* MAIN CONTENT */
     main {
       max-width: 800px;
       margin: 2rem auto;
@@ -227,6 +219,7 @@
       fill: #25D366;
     }
     
+    /* FOOTER */
     footer {
       background-color: var(--secondary);
       color: var(--primary);
@@ -243,20 +236,80 @@
       max-height: 50px;
       height: auto;
       width: auto;
-      loading: lazy;
     }
     
     footer a {
       color: var(--primary);
       text-decoration: none;
       margin: 0 0.5rem;
+      transition: all 0.3s ease;
     }
     
     footer a:hover {
       text-decoration: underline;
+      color: #001f3f;
     }
     
-    /* Responsividade */
+    /* MODAIS */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    
+    .modal-content {
+      background: var(--white);
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 30px;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--primary);
+      transition: transform 0.3s ease;
+    }
+    
+    .close-modal:hover {
+      transform: rotate(90deg);
+    }
+    
+    .modal-body {
+      max-height: 70vh;
+      overflow-y: auto;
+      padding-right: 15px;
+    }
+    
+    .modal h2 {
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .modal h3 {
+      color: var(--primary);
+      margin: 1.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #eee;
+    }
+    
+    /* RESPONSIVIDADE */
     @media (max-width: 768px) {
       main {
         margin: 1rem;
@@ -280,6 +333,10 @@
       th, td {
         padding: 0.5rem;
       }
+      
+      .modal-content {
+        padding: 20px;
+      }
     }
     
     @media (max-width: 480px) {
@@ -289,6 +346,11 @@
       
       .whatsapp-link::after {
         content: "WhatsApp";
+      }
+      
+      footer a {
+        display: block;
+        margin: 0.5rem 0;
       }
     }
   </style>
@@ -326,22 +388,118 @@
   <footer>
     <img src="logo.png" alt="Logo Abatti Genealogia" width="120" height="60" />
     <div>
-      <a href="politica-de-privacidade.html">Política de Privacidade</a> | 
-      <a href="termos-de-uso.html">Termos de Uso</a>
+      <a href="#" onclick="abrirModal('modalPrivacidade')">Política de Privacidade</a> | 
+      <a href="#" onclick="abrirModal('modalTermos')">Termos de Uso</a>
     </div>
     <p>&copy; 2025 - Abatti Genealogia</p>
   </footer>
 
+  <!-- MODAL POLÍTICA DE PRIVACIDADE -->
+  <div id="modalPrivacidade" class="modal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="fecharModal('modalPrivacidade')">×</button>
+      <h2>Política de Privacidade</h2>
+      
+      <div class="modal-body">
+        <p><strong>Última atualização:</strong> 17 de maio de 2025</p>
+
+        <h3>1. Informações Coletadas</h3>
+        <p>Coletamos apenas os sobrenomes pesquisados e dados de contato quando você solicita informações via WhatsApp.</p>
+
+        <h3>2. Uso das Informações</h3>
+        <p>Utilizamos seus dados exclusivamente para:</p>
+        <ul>
+          <li>Fornecer resultados de pesquisa genealógica</li>
+          <li>Responder suas solicitações de contato</li>
+          <li>Melhorar nossos serviços</li>
+        </ul>
+
+        <h3>3. Armazenamento de Dados</h3>
+        <p>Não armazenamos permanentemente os termos pesquisados. Dados do WhatsApp são mantidos apenas durante o período necessário para atendimento.</p>
+
+        <h3>4. Compartilhamento</h3>
+        <p>Não compartilhamos seus dados pessoais com terceiros, exceto quando necessário para:</p>
+        <ul>
+          <li>Atendimento via WhatsApp (sujeito à política do WhatsApp)</li>
+          <li>Cumprimento de obrigação legal</li>
+        </ul>
+
+        <h3>5. Seus Direitos (LGPD)</h3>
+        <p>Você tem direito a:</p>
+        <ul>
+          <li>Acessar seus dados pessoais</li>
+          <li>Solicitar correção de informações incorretas</li>
+          <li>Revogar consentimentos</li>
+          <li>Excluir dados pessoais</li>
+        </ul>
+
+        <h3>6. Contato</h3>
+        <p>Para exercer seus direitos ou dúvidas sobre privacidade:</p>
+        <p>WhatsApp: (45) 9200-27919</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL TERMOS DE USO -->
+  <div id="modalTermos" class="modal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="fecharModal('modalTermos')">×</button>
+      <h2>Termos de Uso</h2>
+      
+      <div class="modal-body">
+        <p><strong>Última atualização:</strong> 17 de maio de 2025</p>
+
+        <h3>1. Aceitação</h3>
+        <p>Ao utilizar este site, você concorda automaticamente com estes Termos e com nossa Política de Privacidade.</p>
+
+        <h3>2. Serviço Oferecido</h3>
+        <p>Fornecemos consulta gratuita a registros históricos de nascimento em Cremona, com as seguintes características:</p>
+        <ul>
+          <li>Dados extraídos de fontes públicas</li>
+          <li>Resultados limitados a informações básicas</li>
+          <li>Documentos completos disponíveis mediante solicitação paga</li>
+        </ul>
+
+        <h3>3. Limitações</h3>
+        <p>Você concorda que:</p>
+        <ul>
+          <li>Os resultados são fornecidos "como estão" sem garantias</li>
+          <li>Dados históricos podem conter erros ou omissões</li>
+          <li>O serviço não substituí pesquisa genealógica profissional</li>
+        </ul>
+
+        <h3>4. Conduta do Usuário</h3>
+        <p>É expressamente proibido:</p>
+        <ul>
+          <li>Extrair dados em massa (scraping)</li>
+          <li>Reproduzir conteúdo sem autorização</li>
+          <li>Utilizar informações para fins ilegais</li>
+        </ul>
+
+        <h3>5. Solicitação de Documentos</h3>
+        <p>Ao solicitar documentos via WhatsApp:</p>
+        <ul>
+          <li>Você será direcionado ao nosso serviço pago</li>
+          <li>Preços e prazos serão informados no contato</li>
+          <li>O pagamento segue nossas condições comerciais</li>
+        </ul>
+
+        <h3>6. Alterações</h3>
+        <p>Reservamos o direito de modificar estes Termos a qualquer momento. Alterações serão comunicadas no site.</p>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Variáveis globais
     let dados = [];
     let carregado = false;
     let timeoutSugestao;
 
-    // Carrega dados ao iniciar
-    document.addEventListener('DOMContentLoaded', () => {
-      carregarDados();
-    });
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', carregarDados);
 
+    // Função para carregar dados
     async function carregarDados() {
       const resultados = document.getElementById("resultados");
       resultados.innerHTML = `
@@ -362,7 +520,6 @@
         dados = linhas.map(l => l.split("\t"));
         carregado = true;
         
-        // Limpa o loading apenas se não houver outro estado
         if (resultados.innerHTML.includes("Carregando banco de dados")) {
           resultados.innerHTML = "<p>Digite um sobrenome para iniciar a pesquisa.</p>";
         }
@@ -377,6 +534,7 @@
       }
     }
 
+    // Funções para sugestões
     function extrairSobrenome(nomeCompleto) {
       if (!nomeCompleto) return '';
       return nomeCompleto.split(" ")[0].toLowerCase().trim();
@@ -388,14 +546,12 @@
       const termo = document.getElementById("busca").value.trim().toLowerCase();
       const caixa = document.getElementById("sugestoes");
       
-      // Esconde sugestões se termo muito curto
       if (termo.length < 2) {
         caixa.classList.remove("visible");
         caixa.innerHTML = "";
         return;
       }
       
-      // Adia a execução para evitar processamento desnecessário
       timeoutSugestao = setTimeout(() => {
         if (!carregado) return;
         
@@ -433,6 +589,7 @@
       pesquisar();
     }
 
+    // Função principal de pesquisa
     async function pesquisar() {
       const termo = document.getElementById("busca").value.trim();
       const resultados = document.getElementById("resultados");
@@ -453,11 +610,9 @@
         return;
       }
       
-      // Feedback visual durante a pesquisa
       btnPesquisar.disabled = true;
       btnPesquisar.innerHTML = '<div class="loading" style="border-top-color: currentColor;"></div> <span>Pesquisando...</span>';
       
-      // Simula um mínimo de loading para melhor UX
       await new Promise(resolve => setTimeout(resolve, 500));
       
       try {
@@ -484,6 +639,7 @@
       }
     }
 
+    // Renderização dos resultados
     function renderizarResultados(dadosFiltrados, termoPesquisa) {
       const resultados = document.getElementById("resultados");
       
@@ -543,7 +699,37 @@
       resultados.appendChild(table);
     }
 
-    // Fecha sugestões ao clicar fora
+    // Funções para os Modais
+    function abrirModal(id) {
+      document.getElementById(id).style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function fecharModal(id) {
+      document.getElementById(id).style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    // Fechar modal ao clicar fora
+    window.onclick = function(event) {
+      if (event.target.className === 'modal') {
+        fecharModal(event.target.id);
+      }
+    }
+
+    // Fechar com ESC
+    document.onkeydown = function(evt) {
+      evt = evt || window.event;
+      if (evt.key === 'Escape') {
+        document.querySelectorAll('.modal').forEach(modal => {
+          if (modal.style.display === 'block') {
+            fecharModal(modal.id);
+          }
+        });
+      }
+    };
+
+    // Fechar sugestões ao clicar fora
     document.addEventListener('click', (e) => {
       const sugestoes = document.getElementById("sugestoes");
       const input = document.getElementById("busca");
