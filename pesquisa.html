@@ -4,57 +4,45 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pesquisa Cremona</title>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Open Sans', sans-serif;
-      background-color: #f7f9fc;
-      color: #333;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
       margin: 0;
       padding: 0;
     }
 
     header {
-      background-color: #002f5f;
+      background-color: #003366;
       color: white;
-      padding: 2rem 1rem;
+      padding: 2rem;
       text-align: center;
     }
 
     main {
-      max-width: 800px;
+      max-width: 900px;
       margin: 2rem auto;
-      background: #fff;
+      background: white;
       padding: 2rem;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    label {
-      font-weight: bold;
-    }
-
-    .input-container {
-      position: relative;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     input[type="text"] {
       width: 100%;
       padding: 0.7rem;
-      margin-top: 0.5rem;
+      font-size: 1rem;
       border: 1px solid #ccc;
       border-radius: 4px;
-      font-size: 1rem;
     }
 
     .sugestoes {
-      background: #fff;
       border: 1px solid #ccc;
-      border-top: none;
+      background: #fff;
       max-height: 200px;
       overflow-y: auto;
       position: absolute;
-      width: 100%;
+      width: calc(100% - 4rem);
       z-index: 10;
     }
 
@@ -64,78 +52,55 @@
     }
 
     .sugestao:hover {
-      background-color: #eef;
-    }
-
-    button {
-      margin-top: 1rem;
-      background-color: #004080;
-      color: white;
-      padding: 0.7rem 1.2rem;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #003060;
-    }
-
-    #resultados {
-      margin-top: 2rem;
+      background-color: #eee;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 1rem;
+      margin-top: 2rem;
     }
 
     th, td {
       border: 1px solid #ccc;
-      padding: 0.5rem;
+      padding: 0.75rem;
       text-align: left;
     }
 
     th {
-      background-color: #f0f0f0;
+      background-color: #004080;
+      color: white;
     }
 
     .whatsapp-link {
-      text-decoration: none;
-      color: #25D366;
+      color: green;
       font-weight: bold;
-      display: flex;
-      align-items: center;
-    }
-
-    .whatsapp-link svg {
-      width: 20px;
-      height: 20px;
-      margin-right: 6px;
-      fill: #25D366;
+      text-decoration: none;
     }
 
     footer {
-      background-color: #002f5f;
-      color: white;
       text-align: center;
-      padding: 1.5rem 1rem;
+      background-color: #003366;
+      color: white;
+      padding: 1rem;
       margin-top: 2rem;
+    }
+
+    .input-container {
+      position: relative;
     }
   </style>
 </head>
 <body>
-
   <header>
     <h1>Pesquisa Cremona</h1>
     <p>Consulte nomes de nascidos em Cremona</p>
   </header>
 
   <main>
-    <label for="busca">Digite um sobrenome:</label>
+    <label for="busca">Digite o sobrenome:</label>
     <div class="input-container">
-      <input type="text" id="busca" oninput="sugerir()" placeholder="Ex: Abatti, Rossi, Zambon" autocomplete="off">
+      <input type="text" id="busca" oninput="sugerir()" placeholder="Ex: Abati, Rossi, Zambon" autocomplete="off">
       <div id="sugestoes" class="sugestoes"></div>
     </div>
     <button onclick="pesquisar()">Pesquisar</button>
@@ -144,7 +109,7 @@
   </main>
 
   <footer>
-    <p>&copy; 2025 - Abatti Genealogia</p>
+    <p>2025 - Abatti Genealogia</p>
   </footer>
 
   <script>
@@ -159,7 +124,7 @@
     }
 
     function extrairSobrenome(nomeCompleto) {
-      return nomeCompleto.split(" ")[0].toLowerCase();
+      return nomeCompleto.split(" ")[0].toUpperCase();
     }
 
     function sugerir() {
@@ -169,13 +134,13 @@
 
       if (termo.length < 2) return;
 
-      const sobrenomes = [...new Set(dados.map(d => extrairSobrenome(d[0])))];
-      const sugestoes = sobrenomes.filter(s => s.startsWith(termo)).slice(0, 10);
+      const sobrenomes = [...new Set(dados.map(l => extrairSobrenome(l[0])))];
+      const sugestoes = sobrenomes.filter(s => s.toLowerCase().startsWith(termo)).slice(0, 10);
 
       sugestoes.forEach(s => {
         const div = document.createElement("div");
         div.className = "sugestao";
-        div.innerText = s.charAt(0).toUpperCase() + s.slice(1);
+        div.innerText = s;
         div.onclick = () => {
           document.getElementById("busca").value = s;
           caixa.innerHTML = "";
@@ -190,49 +155,52 @@
       const resultados = document.getElementById("resultados");
       resultados.innerHTML = "";
 
-      const filtrados = dados.filter(l => extrairSobrenome(l[0]) === termo);
+      const encontrados = dados.filter(l => extrairSobrenome(l[0]).toLowerCase() === termo);
 
-      if (filtrados.length === 0) {
+      if (encontrados.length === 0) {
         resultados.innerHTML = "<p>Nenhum resultado encontrado.</p>";
         return;
       }
 
-      const table = document.createElement("table");
-      const thead = document.createElement("thead");
-      thead.innerHTML = `
-        <tr>
-          <th>Nome</th>
-          <th>Pai</th>
-          <th>Mãe</th>
-          <th>Ano</th>
-          <th>ID</th>
-          <th>Contato</th>
-        </tr>
+      const tabela = document.createElement("table");
+      tabela.innerHTML = `
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Pai</th>
+            <th>Mãe</th>
+            <th>Ano</th>
+            <th>ID</th>
+            <th>WhatsApp</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${encontrados.map(l => {
+            const nome = l[0] || "Desconhecido";
+            const pai = l[1] || "-";
+            const mae = l[2] || "-";
+            const ano = l[3] || "-";
+            const id = l[4] || "-";
+            const msg = encodeURIComponent(`Olá, gostaria de um orçamento para o registro de ${nome}`);
+            const link = `https://api.whatsapp.com/send?phone=5545920027919&text=${msg}`;
+            return `
+              <tr>
+                <td>${nome}</td>
+                <td>${pai}</td>
+                <td>${mae}</td>
+                <td>${ano}</td>
+                <td>${id}</td>
+                <td><a class="whatsapp-link" href="${link}" target="_blank">WhatsApp</a></td>
+              </tr>
+            `;
+          }).join("")}
+        </tbody>
       `;
-      table.appendChild(thead);
 
-      const tbody = document.createElement("tbody");
+      resultados.appendChild(tabela);
+    }
 
-      filtrados.forEach(linha => {
-        const nome = linha[0] || "Sem nome";
-        const pai = linha[1] || "Desconhecido";
-        const mae = linha[2] || "Desconhecida";
-        const ano = linha[3] || "Sem ano";
-        const id = linha[4] || "Sem ID";
-
-        const msg = encodeURIComponent(`Olá, gostaria de um orçamento para o registro de ${nome}`);
-        const wlink = `https://api.whatsapp.com/send?phone=5545920027919&text=${msg}`;
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${nome}</td>
-          <td>${pai}</td>
-          <td>${mae}</td>
-          <td>${ano}</td>
-          <td>${id}</td>
-          <td>
-            <a class="whatsapp-link" href="${wlink}" target="_blank" title="Solicitar orçamento">
-              <svg viewBox="0 0 24 24">
-                <path d="M20.52 3.48A11.865 11.865 0 0 0 12 0C5.373 0 0 5.373 0 12c0 2.121.558 4.16 1.616 5.97L0 24l6.174-1.606A11.92 11.92 0 0 0 12 24c6.627 0 12-5.373 12-12a11.96 11.96 0 0 0-3.48-8.52zm-8.57 16.43c-1.63 0-3.19-.44-4.54-1.27l-.33-.2-3.66.95.97-3.57-.22-.36a8.04 8.04 0 0 1-1.24-4.45c0-4.43 3.6-8.04 8.04-8.04 2.15 0 4.16.83 5.68 2.33a7.98 7.98 0 0 1 2.34 5.66c0 4.44-3.6 8.04-8.03 8.04zm4.57-5.91c-.25-.13-1.48-.73-1.71-.81-.23-.08-.4-.13-.57.13s-.65.81-.8.98c-.15.16-.3.18-.55.06-.25-.13
-::contentReference[oaicite:1]{index=1}
- 
+    carregarDados();
+  </script>
+</body>
+</html>
