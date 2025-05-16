@@ -15,10 +15,18 @@
     }
 
     header {
-      background-color: #002f5f;
-      color: white;
+      background-color: #f9be18;
+      color: #002f5f;
       padding: 2rem 1rem;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    header img {
+      max-height: 80px;
     }
 
     main {
@@ -69,16 +77,19 @@
 
     button {
       margin-top: 1rem;
-      background-color: #004080;
-      color: white;
+      background-color: #f9be18;
+      color: #002f5f;
       padding: 0.7rem 1.2rem;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
     }
 
     button:hover {
-      background-color: #003060;
+      background-color: #d9a913;
     }
 
     #resultados {
@@ -117,17 +128,26 @@
     }
 
     footer {
-      background-color: #002f5f;
-      color: white;
+      background-color: #f9be18;
+      color: #002f5f;
       text-align: center;
       padding: 1.5rem 1rem;
       margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    footer img {
+      max-height: 50px;
     }
   </style>
 </head>
 <body>
 
   <header>
+    <img src="logo.png" alt="Logo Abatti Genealogia" />
     <h1>Pesquisa Cremona</h1>
     <p>Consulte nomes de nascidos em Cremona</p>
   </header>
@@ -144,6 +164,7 @@
   </main>
 
   <footer>
+    <img src="logo.png" alt="Logo Abatti Genealogia" />
     <p>&copy; 2025 - Abatti Genealogia</p>
   </footer>
 
@@ -235,7 +256,7 @@
           <td>
             <a class="whatsapp-link" href="${wlink}" target="_blank" title="Solicitar orçamento">
               <svg viewBox="0 0 24 24">
-                <path d="M20.52 3.48A11.865 11.865 0 0 0 12 0C5.373 0 0 5.373 0 12c0 2.121.558 4.16 1.616 5.97L0 24l6.174-1.606A11.92 11.92 0 0 0 12 24c6.627 0 12-5.373 12-12a11.96 11.96 0 0 0-3.48-8.52zm-8.57 16.43c-1.63 0-3.19-.44-4.54-1.27l-.33-.2-3.66.95.97-3.57-.22-.36a8.04 8.04 0 0 1-1.24-4.45c0-4.43 3.6-8.04 8.04-8.04 2.15 0 4.16.83 5.68 2.33a7.98 7.98 0 0 1 2.34 5.66c0 4.44-3.6 8.04-8.03 8.04z"/>
+                <path d="M20.52 3.48A11.865 11.865 0 0 0 12 0C5.373 0 0 5.373 0 12c0 2.121.558 4.16 1.616 5.97L0 24l6.174-1.606A11.92 11.92 0 0 0 12 24c6.627 0 12-5.373 12-12a11.87 11.87 0 0 0-3.48-8.52zm-8.76 17.82c-1.931 0-3.726-.592-5.24-1.6l-.375-.223-3.65.948.974-3.557-.243-.376a8.47 8.47 0 0 1-1.297-4.665c0-4.678 3.812-8.49 8.503-8.49 2.272 0 4.408.886 6.01 2.5a8.382 8.382 0 0 1 2.492 6.01c0 4.69-3.807 8.498-8.51 8.498zm4.867-6.65c-.266-.134-1.572-.776-1.817-.864-.244-.09-.422-.134-.6.134s-.688.864-.845 1.044c-.155.18-.311.202-.577.067-.266-.134-1.122-.414-2.136-1.318-.789-.703-1.322-1.57-1.478-1.836-.155-.266-.017-.41.117-.544.12-.12.266-.31.398-.466.134-.155.178-.266.266-.444.089-.178.044-.333-.022-.467-.067-.134-.6-1.444-.82-1.98-.215-.518-.434-.448-.6-.456-.155-.007-.333-.007-.51-.007-.178 0-.467.067-.71.333s-.93.91-.93 2.213c0 1.302.953 2.562 1.086 2.74.134.178 1.878 2.86 4.55 4.013.636.275 1.13.44 1.516.564.636.204 1.215.175 1.67.106.51-.08 1.572-.642 1.795-1.262.224-.62.224-1.15.157-1.262-.067-.112-.244-.178-.51-.31z"/>
               </svg>
               Solicitar orçamento
             </a>
@@ -248,7 +269,8 @@
       resultados.appendChild(table);
     }
 
-    window.onload = carregarDados;
+    carregarDados();
   </script>
+
 </body>
 </html>
