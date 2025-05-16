@@ -42,6 +42,26 @@
       font-size: 1rem;
     }
 
+    .sugestoes {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-top: none;
+      max-height: 200px;
+      overflow-y: auto;
+      position: absolute;
+      width: calc(100% - 4rem);
+      z-index: 999;
+    }
+
+    .sugestao {
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+
+    .sugestao:hover {
+      background-color: #eef;
+    }
+
     button {
       margin-top: 1rem;
       background-color: #004080;
@@ -72,6 +92,10 @@
       padding: 1.5rem 1rem;
       margin-top: 2rem;
     }
+
+    .input-container {
+      position: relative;
+    }
   </style>
 </head>
 <body>
@@ -83,7 +107,10 @@
 
   <main>
     <label for="busca">Digite um sobrenome:</label>
-    <input type="text" id="busca" placeholder="Ex: Battisti, Zambon, Trevisan">
+    <div class="input-container">
+      <input type="text" id="busca" oninput="sugerir()" placeholder="Ex: Battisti, Zambon, Trevisan" autocomplete="off">
+      <div id="sugestoes" class="sugestoes"></div>
+    </div>
     <button onclick="pesquisar()">Pesquisar</button>
 
     <div id="resultados"></div>
@@ -94,44 +121,66 @@
   </footer>
 
   <script>
-    async function pesquisar() {
+    let dados = [];
+
+    // Carregar dados da planilha ao iniciar
+    async function carregarDados() {
+      const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIjGlGfirq-urRkYQKubjuXjtpao-5xGuoRxm1eb3XB1s3OrDAINdf8hmHlJkLSg/pub?output=tsv";
+      const resp = await fetch(url);
+      const tsv = await resp.text();
+      const linhas = tsv.trim().split("\n").slice(1); // Ignora cabeçalho
+      dados = linhas.map(linha => linha.split("\t"));
+    }
+
+    // Sugestões automáticas
+    function sugerir() {
+      const termo = document.getElementById("busca").value.toLowerCase();
+      const caixa = document.getElementById("sugestoes");
+      caixa.innerHTML = "";
+
+      if (termo.length < 2) return;
+
+      const sobrenomesUnicos = [...new Set(dados.map(d => d[0]))];
+      const sugestoes = sobrenomesUnicos.filter(n => n.toLowerCase().startsWith(termo)).slice(0, 10);
+
+      sugestoes.forEach(s => {
+        const div = document.createElement("div");
+        div.className = "sugestao";
+        div.innerText = s;
+        div.onclick = () => {
+          document.getElementById("busca").value = s;
+          caixa.innerHTML = "";
+        };
+        caixa.appendChild(div);
+      });
+    }
+
+    // Função de pesquisa principal
+    function pesquisar() {
       const termo = document.getElementById("busca").value.toLowerCase();
       const resultados = document.getElementById("resultados");
-      resultados.innerHTML = "Carregando...";
+      resultados.innerHTML = "";
 
-      const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIjGlGfirq-urRkYQKubjuXjtpao-5xGuoRxm1eb3XB1s3OrDAINdf8hmHlJkLSg/pub?output=tsv";
+      const encontrados = dados.filter(l => (l[0] || "").toLowerCase().includes(termo));
 
-      try {
-        const response = await fetch(sheetURL);
-        const tsv = await response.text();
-        const linhas = tsv.trim().split("\n");
-        const cabecalho = linhas[0].split("\t");
-        const dados = linhas.slice(1).map(l => l.split("\t"));
-
-        const encontrados = dados.filter(c => (c[0] || "").toLowerCase().includes(termo));
-
-        if (encontrados.length === 0) {
-          resultados.innerHTML = "<p>Nenhum resultado encontrado.</p>";
-          return;
-        }
-
-        resultados.innerHTML = "";
-        encontrados.forEach(campos => {
-          const nome = campos[0] || "Sem nome";
-          const local = campos[1] || "Desconhecido";
-          const ano = campos[2] || "Sem data";
-
-          const div = document.createElement("div");
-          div.className = "item";
-          div.innerHTML = `<strong>${nome}</strong><br>Local: ${local}<br>Ano: ${ano}`;
-          resultados.appendChild(div);
-        });
-
-      } catch (erro) {
-        resultados.innerHTML = "<p>Erro ao carregar os dados.</p>";
-        console.error(erro);
+      if (encontrados.length === 0) {
+        resultados.innerHTML = "<p>Nenhum resultado encontrado.</p>";
+        return;
       }
+
+      encontrados.forEach(campos => {
+        const nome = campos[0] || "Sem nome";
+        const local = campos[1] || "Desconhecido";
+        const ano = campos[2] || "Sem data";
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `<strong>${nome}</strong><br>Local: ${local}<br>Ano: ${ano}`;
+        resultados.appendChild(div);
+      });
     }
+
+    // Carregar ao abrir a página
+    carregarDados();
   </script>
 
 </body>
