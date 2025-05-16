@@ -1,742 +1,164 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pesquisa Cremona</title>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"></noscript>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro Itália</title>
   <style>
-    /* ESTILOS GERAIS */
-    :root {
-      --primary: #002f5f;
-      --secondary: #f9be18;
-      --text: #333;
-      --light-bg: #f7f9fc;
-      --white: #fff;
-      --error: #d32f2f;
-      --error-bg: #ffebee;
-    }
-    
-    * {
-      box-sizing: border-box;
+    body {
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
+      background-color: #f4f4f4;
     }
-    
-    body {
-      font-family: 'Open Sans', sans-serif;
-      background-color: var(--light-bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-    
-    /* HEADER */
+
     header {
-      background-color: var(--secondary);
-      color: var(--primary);
-      padding: 2rem 1rem;
-      text-align: center;
+      background-color: #ffffff;
+      padding: 10px;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      gap: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    
-    header img {
-      max-height: 80px;
-      height: auto;
-      width: auto;
+
+    .logo {
+      max-height: 100px;
     }
-    
-    /* MAIN CONTENT */
-    main {
-      max-width: 800px;
-      margin: 2rem auto;
-      background: var(--white);
-      padding: 2rem;
+
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    
-    label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 0.5rem;
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
     }
-    
-    .input-container {
-      position: relative;
-      margin-bottom: 1rem;
-    }
-    
+
     input[type="text"] {
       width: 100%;
-      padding: 0.7rem;
+      padding: 10px;
+      font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 4px;
-      font-size: 1rem;
-      transition: border 0.3s ease;
+      margin-bottom: 20px;
     }
-    
-    input[type="text"]:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(0,47,95,0.2);
-    }
-    
-    .sugestoes {
-      background: var(--white);
-      border: 1px solid #ccc;
-      border-top: none;
-      border-radius: 0 0 4px 4px;
-      max-height: 200px;
-      overflow-y: auto;
-      position: absolute;
-      width: 100%;
-      z-index: 10;
-      display: none;
-    }
-    
-    .sugestoes.visible {
-      display: block;
-    }
-    
-    .sugestao {
-      padding: 0.7rem;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-    
-    .sugestao:hover, .sugestao:focus {
-      background-color: #eef;
-    }
-    
-    button {
-      margin-top: 0.5rem;
-      background-color: var(--secondary);
-      color: var(--primary);
-      padding: 0.7rem 1.5rem;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
-    button:hover {
-      background-color: #d9a913;
-      transform: translateY(-1px);
-    }
-    
-    button:active {
-      transform: translateY(0);
-    }
-    
-    button:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
-    
-    #resultados {
-      margin-top: 2rem;
-      min-height: 100px;
-    }
-    
-    .loading-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      padding: 1rem;
-    }
-    
-    .loading {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(0,47,95,.3);
-      border-radius: 50%;
-      border-top-color: var(--primary);
-      animation: spin 1s ease-in-out infinite;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
-    .error {
-      color: var(--error);
-      background: var(--error-bg);
-      padding: 1rem;
-      border-radius: 4px;
-      margin: 1rem 0;
-    }
-    
+
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 1rem;
-      font-size: 0.9rem;
     }
-    
-    th, td {
-      border: 1px solid #ddd;
-      padding: 0.75rem;
+
+    th,
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
       text-align: left;
     }
-    
-    th {
-      background-color: #f5f5f5;
-      font-weight: bold;
-    }
-    
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-    
+
     .whatsapp-link {
-      text-decoration: none;
-      color: #25D366;
-      font-weight: bold;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      transition: opacity 0.2s ease;
+      color: #25d366;
+      text-decoration: none;
     }
-    
-    .whatsapp-link:hover {
-      opacity: 0.8;
-    }
-    
+
     .whatsapp-link svg {
       width: 20px;
       height: 20px;
-      fill: #25D366;
-    }
-    
-    /* FOOTER */
-    footer {
-      background-color: var(--secondary);
-      color: var(--primary);
-      text-align: center;
-      padding: 1.5rem 1rem;
-      margin-top: 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.8rem;
-    }
-    
-    footer img {
-      max-height: 50px;
-      height: auto;
-      width: auto;
-    }
-    
-    footer a {
-      color: var(--primary);
-      text-decoration: none;
-      margin: 0 0.5rem;
-      transition: all 0.3s ease;
-    }
-    
-    footer a:hover {
-      text-decoration: underline;
-      color: #001f3f;
-    }
-    
-    /* MODAIS */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      z-index: 1000;
-      overflow-y: auto;
-      padding: 20px;
-    }
-    
-    .modal-content {
-      background: var(--white);
-      max-width: 800px;
-      margin: 30px auto;
-      padding: 30px;
-      border-radius: 8px;
-      position: relative;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-    
-    .close-modal {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      font-size: 24px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      color: var(--primary);
-      transition: transform 0.3s ease;
-    }
-    
-    .close-modal:hover {
-      transform: rotate(90deg);
-    }
-    
-    .modal-body {
-      max-height: 70vh;
-      overflow-y: auto;
-      padding-right: 15px;
-    }
-    
-    .modal h2 {
-      color: var(--primary);
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-    
-    .modal h3 {
-      color: var(--primary);
-      margin: 1.5rem 0 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid #eee;
-    }
-    
-    /* RESPONSIVIDADE */
-    @media (max-width: 768px) {
-      main {
-        margin: 1rem;
-        padding: 1rem;
-      }
-      
-      header {
-        padding: 1.5rem 1rem;
-      }
-      
-      header img {
-        max-height: 60px;
-      }
-      
-      table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-      }
-      
-      th, td {
-        padding: 0.5rem;
-      }
-      
-      .modal-content {
-        padding: 20px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .whatsapp-link span {
-        display: none;
-      }
-      
-      .whatsapp-link::after {
-        content: "WhatsApp";
-      }
-      
-      footer a {
-        display: block;
-        margin: 0.5rem 0;
-      }
+      margin-right: 5px;
+      fill: #25d366;
     }
   </style>
 </head>
-<body>
 
+<body>
   <header>
-    <img src="logo.png" alt="Logo Abatti Genealogia" width="480" height="240" />
-    <h1>Pesquisa Cremona</h1>
-    <p>Consulte nomes de nascidos em Cremona entre 1866 e 1888</p>
+    <img src="https://italiaregistro.com.br/wp-content/uploads/2023/03/cropped-logo-italia-registro-1.png" alt="Logo" class="logo" />
   </header>
 
-  <main>
-    <label for="busca">Digite um sobrenome para iniciar a pesquisa:</label>
-    <div class="input-container">
-      <input 
-        type="text" 
-        id="busca" 
-        aria-label="Digite um sobrenome para pesquisa" 
-        aria-autocomplete="list" 
-        aria-controls="sugestoes"
-        oninput="sugerir()" 
-        placeholder="Ex: Abati, Rossi, Conti" 
-        autocomplete="off"
-        onkeydown="if(event.key === 'Enter') pesquisar()">
-      <div id="sugestoes" class="sugestoes" role="listbox"></div>
-    </div>
-    <button onclick="pesquisar()" id="btnPesquisar">
-      <span>Pesquisar</span>
-    </button>
-
+  <div class="container">
+    <h1>Busque seu registro de nascimento italiano</h1>
+    <input type="text" id="busca" placeholder="Digite o nome ou comuna" />
     <div id="resultados"></div>
-  </main>
-
-  <footer>
-    <img src="logo.png" alt="Logo Abatti Genealogia" width="120" height="60" />
-    <div>
-      <a href="#" onclick="abrirModal('modalPrivacidade')">Política de Privacidade</a> | 
-      <a href="#" onclick="abrirModal('modalTermos')">Termos de Uso</a>
-    </div>
-    <p>&copy; 2025 - Abatti Genealogia</p>
-  </footer>
-
-  <!-- MODAL POLÍTICA DE PRIVACIDADE -->
-  <div id="modalPrivacidade" class="modal">
-    <div class="modal-content">
-      <button class="close-modal" onclick="fecharModal('modalPrivacidade')">×</button>
-      <h2>Política de Privacidade</h2>
-      
-      <div class="modal-body">
-        <p><strong>Última atualização:</strong> 17 de maio de 2025</p>
-
-        <h3>1. Informações Coletadas</h3>
-        <p>Coletamos apenas os sobrenomes pesquisados e dados de contato quando você solicita informações via WhatsApp.</p>
-
-        <h3>2. Uso das Informações</h3>
-        <p>Utilizamos seus dados exclusivamente para:</p>
-        <ul>
-          <li>Fornecer resultados de pesquisa genealógica</li>
-          <li>Responder suas solicitações de contato</li>
-          <li>Melhorar nossos serviços</li>
-        </ul>
-
-        <h3>3. Armazenamento de Dados</h3>
-        <p>Não armazenamos permanentemente os termos pesquisados. Dados do WhatsApp são mantidos apenas durante o período necessário para atendimento.</p>
-
-        <h3>4. Compartilhamento</h3>
-        <p>Não compartilhamos seus dados pessoais com terceiros, exceto quando necessário para:</p>
-        <ul>
-          <li>Atendimento via WhatsApp (sujeito à política do WhatsApp)</li>
-          <li>Cumprimento de obrigação legal</li>
-        </ul>
-
-        <h3>5. Seus Direitos (LGPD)</h3>
-        <p>Você tem direito a:</p>
-        <ul>
-          <li>Acessar seus dados pessoais</li>
-          <li>Solicitar correção de informações incorretas</li>
-          <li>Revogar consentimentos</li>
-          <li>Excluir dados pessoais</li>
-        </ul>
-
-        <h3>6. Contato</h3>
-        <p>Para exercer seus direitos ou dúvidas sobre privacidade:</p>
-        <p>WhatsApp: (45) 9200-27919</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL TERMOS DE USO -->
-  <div id="modalTermos" class="modal">
-    <div class="modal-content">
-      <button class="close-modal" onclick="fecharModal('modalTermos')">×</button>
-      <h2>Termos de Uso</h2>
-      
-      <div class="modal-body">
-        <p><strong>Última atualização:</strong> 17 de maio de 2025</p>
-
-        <h3>1. Aceitação</h3>
-        <p>Ao utilizar este site, você concorda automaticamente com estes Termos e com nossa Política de Privacidade.</p>
-
-        <h3>2. Serviço Oferecido</h3>
-        <p>Fornecemos consulta gratuita a registros históricos de nascimento em Cremona, com as seguintes características:</p>
-        <ul>
-          <li>Dados extraídos de fontes públicas</li>
-          <li>Resultados limitados a informações básicas</li>
-          <li>Documentos completos disponíveis mediante solicitação paga</li>
-        </ul>
-
-        <h3>3. Limitações</h3>
-        <p>Você concorda que:</p>
-        <ul>
-          <li>Os resultados são fornecidos "como estão" sem garantias</li>
-          <li>Dados históricos podem conter erros ou omissões</li>
-          <li>O serviço não substituí pesquisa genealógica profissional</li>
-        </ul>
-
-        <h3>4. Conduta do Usuário</h3>
-        <p>É expressamente proibido:</p>
-        <ul>
-          <li>Extrair dados em massa (scraping)</li>
-          <li>Reproduzir conteúdo sem autorização</li>
-          <li>Utilizar informações para fins ilegais</li>
-        </ul>
-
-        <h3>5. Solicitação de Documentos</h3>
-        <p>Ao solicitar documentos via WhatsApp:</p>
-        <ul>
-          <li>Você será direcionado ao nosso serviço pago</li>
-          <li>Preços e prazos serão informados no contato</li>
-          <li>O pagamento segue nossas condições comerciais</li>
-        </ul>
-
-        <h3>6. Alterações</h3>
-        <p>Reservamos o direito de modificar estes Termos a qualquer momento. Alterações serão comunicadas no site.</p>
-      </div>
-    </div>
   </div>
 
   <script>
-    // Variáveis globais
+    const buscaInput = document.getElementById("busca");
+    const resultados = document.getElementById("resultados");
+
     let dados = [];
-    let carregado = false;
-    let timeoutSugestao;
 
-    // Inicialização
-    document.addEventListener('DOMContentLoaded', carregarDados);
-
-    // Função para carregar dados
     async function carregarDados() {
-      const resultados = document.getElementById("resultados");
-      resultados.innerHTML = `
-        <div class="loading-container">
-          <div class="loading"></div>
-          <span>Carregando banco de dados...</span>
-        </div>
-      `;
-      
       try {
-        const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIjGlGfirq-urRkYQKubjuXjtpao-5xGuoRxm1eb3XB1s3OrDAINdf8hmHlJkLSg/pub?gid=294660178&single=true&output=tsv";
-        const resp = await fetch(url);
-        
-        if (!resp.ok) throw new Error('Falha ao carregar dados');
-        
-        const tsv = await resp.text();
-        const linhas = tsv.trim().split("\n").slice(1);
-        dados = linhas.map(l => l.split("\t"));
-        carregado = true;
-        
-        if (resultados.innerHTML.includes("Carregando banco de dados")) {
-        }
-      } catch (error) {
-        console.error("Erro ao carregar dados:", error);
-        resultados.innerHTML = `
-          <div class="error">
-            <p>Serviço temporariamente indisponível.</p>
-            <p>Tente novamente mais tarde ou entre em contato.</p>
-          </div>
-        `;
+        const resposta = await fetch("https://italiaregistro.com.br/dados/dados.json");
+        dados = await resposta.json();
+      } catch (erro) {
+        resultados.innerHTML = `<p>Erro ao carregar os dados.</p>`;
       }
     }
 
-    // Funções para sugestões
-    function extrairSobrenome(nomeCompleto) {
-      if (!nomeCompleto) return '';
-      return nomeCompleto.split(" ")[0].toLowerCase().trim();
+    function buscarRegistros(termo) {
+      const termoLower = termo.toLowerCase();
+      return dados.filter(item =>
+        item.Nome.toLowerCase().includes(termoLower) ||
+        item.Comuna.toLowerCase().includes(termoLower)
+      );
     }
 
-    function sugerir() {
-      clearTimeout(timeoutSugestao);
-      
-      const termo = document.getElementById("busca").value.trim().toLowerCase();
-      const caixa = document.getElementById("sugestoes");
-      
-      if (termo.length < 2) {
-        caixa.classList.remove("visible");
-        caixa.innerHTML = "";
+    function exibirResultados(resultadosBusca) {
+      if (resultadosBusca.length === 0) {
+        resultados.innerHTML = `<p>Nenhum registro encontrado.</p>`;
         return;
       }
-      
-      timeoutSugestao = setTimeout(() => {
-        if (!carregado) return;
-        
-        const sobrenomes = [...new Set(dados.map(d => extrairSobrenome(d[0])))];
-        const sugestoes = sobrenomes
-          .filter(s => s.startsWith(termo))
-          .slice(0, 10);
-        
-        caixa.innerHTML = "";
-        
-        if (sugestoes.length === 0) {
-          caixa.classList.remove("visible");
-          return;
-        }
-        
-        sugestoes.forEach(s => {
-          const div = document.createElement("div");
-          div.className = "sugestao";
-          div.tabIndex = 0;
-          div.innerText = s.charAt(0).toUpperCase() + s.slice(1);
-          div.onclick = () => selecionarSugestao(s);
-          div.onkeydown = (e) => {
-            if (e.key === 'Enter') selecionarSugestao(s);
-          };
-          caixa.appendChild(div);
-        });
-        
-        caixa.classList.add("visible");
-      }, 300);
-    }
 
-    function selecionarSugestao(sugestao) {
-      document.getElementById("busca").value = sugestao;
-      document.getElementById("sugestoes").classList.remove("visible");
-      pesquisar();
-    }
-
-    // Função principal de pesquisa
-    async function pesquisar() {
-      const termo = document.getElementById("busca").value.trim();
-      const resultados = document.getElementById("resultados");
-      const btnPesquisar = document.getElementById("btnPesquisar");
-      
-      if (!termo) {
-        resultados.innerHTML = `<div class="error">Por favor, digite um sobrenome para pesquisar</div>`;
-        return;
-      }
-      
-      if (!carregado) {
-        resultados.innerHTML = `
-          <div class="loading-container">
-            <div class="loading"></div>
-            <span>Carregando dados, aguarde...</span>
-          </div>
-        `;
-        return;
-      }
-      
-      btnPesquisar.disabled = true;
-      btnPesquisar.innerHTML = '<div class="loading" style="border-top-color: currentColor;"></div> <span>Pesquisando...</span>';
-      
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      try {
-        const filtrados = dados
-          .filter(l => extrairSobrenome(l[0]) === termo.toLowerCase())
-          .sort((a, b) => a[0].localeCompare(b[0]));
-        
-        if (filtrados.length === 0) {
-          resultados.innerHTML = `<p>Nenhum resultado encontrado para "${termo}".</p>`;
-          return;
-        }
-        
-        renderizarResultados(filtrados, termo);
-      } catch (error) {
-        console.error("Erro na pesquisa:", error);
-        resultados.innerHTML = `
-          <div class="error">
-            Ocorreu um erro durante a pesquisa. Tente novamente.
-          </div>
-        `;
-      } finally {
-        btnPesquisar.disabled = false;
-        btnPesquisar.innerHTML = '<span>Pesquisar</span>';
-      }
-    }
-
-    // Renderização dos resultados
-    function renderizarResultados(dadosFiltrados, termoPesquisa) {
-      const resultados = document.getElementById("resultados");
-      
-      const table = document.createElement("table");
-      table.setAttribute("aria-label", `Resultados para ${termoPesquisa}`);
-      
-      const thead = document.createElement("thead");
-      thead.innerHTML = `
+      let html = `<table>
         <tr>
           <th>Nome</th>
-          <th>Pai</th>
-          <th>Mãe</th>
-          <th>Ano</th>
-          <th>ID</th>
+          <th>Data de nascimento</th>
+          <th>Comuna</th>
           <th>Contato</th>
-        </tr>
-      `;
-      table.appendChild(thead);
-      
-      const tbody = document.createElement("tbody");
-      
-      dadosFiltrados.forEach(linha => {
-        const nome = linha[0] || "Sem nome";
-        const pai = linha[1] || "Desconhecido";
-        const mae = linha[2] || "Desconhecida";
-        const ano = linha[3] || "Sem ano";
-        const id = linha[4] || "Sem ID";
-        
-        const msg = encodeURIComponent(
-          `Olá, gostaria de um orçamento para o registro de ${nome} (ID: ${id})`
-        );
-        const wlink = `https://api.whatsapp.com/send?phone=5545920027919&text=${msg}`;
-        
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${nome}</td>
-          <td>${pai}</td>
-          <td>${mae}</td>
-          <td>${ano}</td>
-          <td>${id}</td>
-          <td>
-            <a class="whatsapp-link" href="${wlink}" target="_blank" rel="noopener" title="Solicitar orçamento via WhatsApp">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M20.52 3.48A11.865 11.865 0 0 0 12 0C5.373 0 0 5.373 0 12c0 2.121.558 4.16 1.616 5.97L0 24l6.174-1.606A11.92 11.92 0 0 0 12 24c6.627 0 12-5.373 12-12a11.87 11.87 0 0 0-3.48-8.52zm-8.76 17.82c-1.931 0-3.726-.592-5.24-1.6l-.375-.223-3.65.948.974-3.557-.243-.376a8.47 8.47 0 0 1-1.297-4.665c0-4.678 3.812-8.49 8.503-8.49 2.272 0 4.408.886 6.01 2.5a8.382 8.382 0 0 1 2.492 6.01c0 4.69-3.807 8.498-8.51 8.498zm4.867-6.65c-.266-.134-1.572-.776-1.817-.864-.244-.09-.422-.134-.6.134s-.688.864-.845 1.044c-.155.18-.311.202-.577.067-.266-.134-1.122-.414-2.136-1.318-.789-.703-1.322-1.57-1.478-1.836-.155-.266-.017-.41.117-.544.12-.12.266-.31.398-.466.134-.155.178-.266.266-.444.089-.178.044-.333-.022-.467-.067-.134-.6-1.444-.82-1.98-.215-.518-.434-.448-.6-.456-.155-.007-.333-.007-.51-.007-.178 0-.467.067-.71.333s-.93.91-.93 2.213c0 1.302.953 2.562 1.086 2.74.134.178 1.878 2.86 4.55 4.013.636.275 1.13.44 1.516.564.636.204 1.215.175 1.67.106.51-.08 1.572-.642 1.795-1.262.224-.62.224-1.15.157-1.262-.067-.112-.244-.178-.51-.31z"/>
+        </tr>`;
+
+      resultadosBusca.forEach(({ Nome: nome, Data: data, Comuna: comuna }) => {
+        const textoWhatsApp = `Olá! Gostaria de solicitar o registro de nascimento de ${nome}, nascido em ${data} na comuna de ${comuna}.`;
+        const urlWhatsApp = `https://wa.me/5545920027919?text=${encodeURIComponent(textoWhatsApp)}`;
+
+        html += `
+          <tr>
+            <td>${nome}</td>
+            <td>${data}</td>
+            <td>${comuna}</td>
+            <td><a href="${urlWhatsApp}" target="_blank" rel="noopener" class="whatsapp-link">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path d="M380.9 97.1C339-4.3 221.1-31.6 135.2 31.4 88.1 67.6 60.6 120.9 64.1 177.7c.2 7.1-1.8 14.1-5.8 20.1L26.6 264.4c-8.1 12-5.2 28.3 6.5 36.9l67.2 49.3c5.4 4 12.1 6.2 18.8 6.2 2.7 0 5.4-.4 8-1.2 6.4-2 13.2-.2 17.9 4.7l42.2 42.8c9.5 9.6 24.4 12.3 36.6 6.6l70.7-33.3c7.4-3.5 15.3-5.3 23.4-5.3 50.8 0 97.3-29.3 118.8-76.1 33.9-73.8 3.6-160.6-66.8-196.9z" />
               </svg>
               <span>Solicitar orçamento</span>
-            </a>
-          </td>
-        `;
-        tbody.appendChild(tr);
+            </a></td>
+          </tr>`;
       });
-      
-      table.appendChild(tbody);
-      resultados.innerHTML = `
-        <h2>Resultados para "${termoPesquisa}" (${dadosFiltrados.length} registros)</h2>
-      `;
-      resultados.appendChild(table);
+
+      html += `</table>`;
+      resultados.innerHTML = html;
     }
 
-    // Funções para os Modais
-    function abrirModal(id) {
-      document.getElementById(id).style.display = 'block';
-      document.body.style.overflow = 'hidden';
-    }
-
-    function fecharModal(id) {
-      document.getElementById(id).style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-
-    // Fechar modal ao clicar fora
-    window.onclick = function(event) {
-      if (event.target.className === 'modal') {
-        fecharModal(event.target.id);
-      }
-    }
-
-    // Fechar com ESC
-    document.onkeydown = function(evt) {
-      evt = evt || window.event;
-      if (evt.key === 'Escape') {
-        document.querySelectorAll('.modal').forEach(modal => {
-          if (modal.style.display === 'block') {
-            fecharModal(modal.id);
-          }
-        });
-      }
-    };
-
-    // Fechar sugestões ao clicar fora
-    document.addEventListener('click', (e) => {
-      const sugestoes = document.getElementById("sugestoes");
-      const input = document.getElementById("busca");
-      
-      if (e.target !== input && e.target !== sugestoes && !sugestoes.contains(e.target)) {
-        sugestoes.classList.remove("visible");
+    buscaInput.addEventListener("input", () => {
+      const termo = buscaInput.value.trim();
+      if (termo.length > 2) {
+        const encontrados = buscarRegistros(termo);
+        exibirResultados(encontrados);
+      } else {
+        resultados.innerHTML = "";
       }
     });
+
+    carregarDados();
   </script>
 </body>
+
 </html>
