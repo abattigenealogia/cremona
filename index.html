@@ -520,6 +520,7 @@
         dados = linhas.map(l => l.split("\t"));
         carregado = true;
         
+        if (resultados.innerHTML.includes("Carregando banco de dados")) {
         }
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
