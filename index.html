@@ -360,11 +360,11 @@
   <header>
     <img src="logo.png" alt="Logo Abatti Genealogia" width="160" height="80" />
     <h1>Pesquisa Cremona</h1>
-    <p>Consulte nomes de nascidos em Cremona</p>
+    <p>Consulte nomes de nascidos em Cremona entre 1866 e 1888</p>
   </header>
 
   <main>
-    <label for="busca">Digite um sobrenome:</label>
+    <label for="busca">Digite um sobrenome para iniciar a pesquisa:</label>
     <div class="input-container">
       <input 
         type="text" 
@@ -521,7 +521,6 @@
         carregado = true;
         
         if (resultados.innerHTML.includes("Carregando banco de dados")) {
-          resultados.innerHTML = "<p>Digite um sobrenome para iniciar a pesquisa.</p>";
         }
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
