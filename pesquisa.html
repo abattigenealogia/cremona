@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pesquisa Genealógica - Emigrazione Veneta</title>
+  <title>Pesquisa Cremona</title>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -101,14 +101,14 @@
 <body>
 
   <header>
-    <h1>Pesquisa Genealógica</h1>
-    <p>Consulta de nomes da imigração vêneta</p>
+    <h1>Pesquisa Cremona</h1>
+    <p>Consulte nomes de nascidos em Cremona</p>
   </header>
 
   <main>
     <label for="busca">Digite um sobrenome:</label>
     <div class="input-container">
-      <input type="text" id="busca" oninput="sugerir()" placeholder="Ex: Battisti, Zambon, Trevisan" autocomplete="off">
+      <input type="text" id="busca" oninput="sugerir()" placeholder="Ex: Abatti, Rossi, Zambon" autocomplete="off">
       <div id="sugestoes" class="sugestoes"></div>
     </div>
     <button onclick="pesquisar()">Pesquisar</button>
@@ -117,23 +117,20 @@
   </main>
 
   <footer>
-    <p>&copy; 2025 Emigrazione Veneta - Cremona</p>
+    <p>&copy; 2025 - Abatti Genealogia</p>
   </footer>
 
   <script>
     let dados = [];
 
-    // Carregar dados da planilha ao iniciar
     async function carregarDados() {
-      const url = "const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIjGlGfirq-urRkYQKubjuXjtpao-5xGuoRxm1eb3XB1s3OrDAINdf8hmHlJkLSg/pub?gid=294660178&single=true&output=tsv";
-";
+      const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIjGlGfirq-urRkYQKubjuXjtpao-5xGuoRxm1eb3XB1s3OrDAINdf8hmHlJkLSg/pub?gid=294660178&single=true&output=tsv";
       const resp = await fetch(url);
       const tsv = await resp.text();
       const linhas = tsv.trim().split("\n").slice(1); // Ignora cabeçalho
       dados = linhas.map(linha => linha.split("\t"));
     }
 
-    // Sugestões automáticas
     function sugerir() {
       const termo = document.getElementById("busca").value.toLowerCase();
       const caixa = document.getElementById("sugestoes");
@@ -156,7 +153,6 @@
       });
     }
 
-    // Função de pesquisa principal
     function pesquisar() {
       const termo = document.getElementById("busca").value.toLowerCase();
       const resultados = document.getElementById("resultados");
@@ -180,7 +176,6 @@
       });
     }
 
-    // Carregar ao abrir a página
     carregarDados();
   </script>
 
