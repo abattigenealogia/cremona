@@ -1,76 +1,84 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Emigrazione Veneta - Inspirado</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emigrazione Veneta - Cremona</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
       font-family: 'Open Sans', sans-serif;
-      line-height: 1.6;
-      background-color: #f0f0f5;
+      background-color: #f4f4f9;
       color: #333;
     }
 
     header {
-      background-color: #003366;
-      color: #fff;
-      padding: 2rem 1rem;
+      background-color: #002f5f;
+      color: white;
+      padding: 1.5rem 1rem;
       text-align: center;
     }
 
     nav {
-      background-color: #005599;
-      padding: 0.75rem;
+      background-color: #004080;
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 30px;
+      padding: 1rem;
       flex-wrap: wrap;
     }
 
     nav a {
-      color: #fff;
+      color: white;
       text-decoration: none;
       font-weight: bold;
-      transition: 0.3s ease;
+      transition: 0.3s;
     }
 
     nav a:hover {
-      text-decoration: underline;
       color: #ffcc00;
+    }
+
+    .banner {
+      width: 100%;
+      height: 300px;
+      background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Palazzo_Comunale_-_Cremona.jpg/1200px-Palazzo_Comunale_-_Cremona.jpg");
+      background-size: cover;
+      background-position: center;
     }
 
     main {
       max-width: 1000px;
       margin: 2rem auto;
-      background: #fff;
-      padding: 2rem;
+      padding: 1.5rem;
+      background-color: white;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
     }
 
-    h1, h2 {
-      color: #003366;
-      margin-bottom: 1rem;
+    section {
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      color: #004080;
+      margin-bottom: 0.5rem;
     }
 
     p {
       margin-bottom: 1rem;
+      line-height: 1.6;
     }
 
     footer {
-      background-color: #003366;
-      color: #fff;
+      background-color: #002f5f;
+      color: white;
       text-align: center;
       padding: 1.5rem 1rem;
       margin-top: 2rem;
@@ -79,12 +87,14 @@
     @media (max-width: 600px) {
       nav {
         flex-direction: column;
-        align-items: center;
+      }
+
+      .banner {
+        height: 200px;
       }
 
       main {
         margin: 1rem;
-        padding: 1rem;
       }
     }
   </style>
@@ -92,28 +102,37 @@
 <body>
 
   <header>
-    <h1>Emigrazione Veneta (Versão Inspirada)</h1>
-    <p>Histórias e memórias da emigração vêneta pelo mundo</p>
+    <h1>Emigrazione Veneta - Cremona</h1>
+    <p>Preservando a memória da imigração veneta na Itália e no Brasil</p>
   </header>
 
   <nav>
-    <a href="#">Home</a>
-    <a href="#">Chi siamo</a>
-    <a href="#">Progetti</a>
-    <a href="#">Contatti</a>
+    <a href="#quem-somos">Quem Somos</a>
+    <a href="#projetos">Projetos</a>
+    <a href="#contato">Contato</a>
   </nav>
 
+  <div class="banner"></div>
+
   <main>
-    <h2>Benvenuti!</h2>
-    <p>Este é um site inspirado no projeto Emigrazione Veneta, criado para compartilhar e preservar a história da emigração vêneta para diversos países, incluindo o Brasil, Argentina e Austrália.</p>
+    <section id="quem-somos">
+      <h2>Quem Somos</h2>
+      <p>Somos um grupo dedicado a preservar, divulgar e celebrar a história da emigração vêneta, especialmente ligada à região de Cremona. Trabalhamos com registros, documentos, fotos e histórias de famílias que fizeram parte desse movimento histórico.</p>
+    </section>
 
-    <p>Aqui você pode explorar projetos culturais, depoimentos, fotos históricas e muito mais.</p>
+    <section id="projetos">
+      <h2>Projetos</h2>
+      <p>Organizamos exposições, encontros culturais e publicações sobre a presença veneta na Itália e nas Américas. Colaboramos com associações e genealogistas para manter viva a memória dos nossos antepassados.</p>
+    </section>
 
-    <p><strong>Quer contribuir?</strong> Entre em contato e envie sua história.</p>
+    <section id="contato">
+      <h2>Contato</h2>
+      <p>Quer contribuir com histórias, fotos ou documentos? Entre em contato pelo e-mail: <a href="mailto:contato@emigrazioneveneta.com">contato@emigrazioneveneta.com</a></p>
+    </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 Emigrazione Veneta - Projeto Inspirado</p>
+    <p>&copy; 2025 Emigrazione Veneta - Cremona. Todos os direitos reservados.</p>
   </footer>
 
 </body>
