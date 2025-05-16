@@ -190,7 +190,9 @@
       const resultados = document.getElementById("resultados");
       resultados.innerHTML = "";
 
-      const filtrados = dados.filter(l => extrairSobrenome(l[0]) === termo);
+      const filtrados = dados
+        .filter(l => extrairSobrenome(l[0]) === termo)
+        .sort((a, b) => a[0].localeCompare(b[0]));
 
       if (filtrados.length === 0) {
         resultados.innerHTML = "<p>Nenhum resultado encontrado.</p>";
