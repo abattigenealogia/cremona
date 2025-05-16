@@ -125,7 +125,8 @@
 
     // Carregar dados da planilha ao iniciar
     async function carregarDados() {
-      const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIjGlGfirq-urRkYQKubjuXjtpao-5xGuoRxm1eb3XB1s3OrDAINdf8hmHlJkLSg/pub?output=tsv";
+      const url = "const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIjGlGfirq-urRkYQKubjuXjtpao-5xGuoRxm1eb3XB1s3OrDAINdf8hmHlJkLSg/pub?gid=294660178&single=true&output=tsv";
+";
       const resp = await fetch(url);
       const tsv = await resp.text();
       const linhas = tsv.trim().split("\n").slice(1); // Ignora cabeçalho
