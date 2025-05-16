@@ -81,8 +81,31 @@
     }
 
     .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 0.5rem;
       border-bottom: 1px solid #ddd;
+    }
+
+    .info {
+      max-width: 80%;
+    }
+
+    .whatsapp-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: #25D366;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .whatsapp-link svg {
+      width: 24px;
+      height: 24px;
+      margin-right: 0.3rem;
+      fill: #25D366;
     }
 
     footer {
@@ -171,15 +194,32 @@
         const mae = campos[2] || "Desconhecida";
         const ano = campos[3] || "Sem ano";
         const id = campos[4] || "Sem ID";
+
+        // Texto da mensagem para WhatsApp, codificado para URL
+        const mensagem = encodeURIComponent(`Olá, gostaria de um orçamento para o registro de ${nome}`);
+
+        // Link WhatsApp com número e mensagem
+        const whatsappLink = `https://api.whatsapp.com/send?phone=+5545920027919&text=${mensagem}`;
+
         const div = document.createElement("div");
         div.className = "item";
+
         div.innerHTML = `
-          <strong>${nome}</strong><br>
-          Pai: ${pai}<br>
-          Mãe: ${mae}<br>
-          Ano: ${ano}<br>
-          ID: ${id}
+          <div class="info">
+            <strong>${nome}</strong><br>
+            Pai: ${pai}<br>
+            Mãe: ${mae}<br>
+            Ano: ${ano}<br>
+            ID: ${id}
+          </div>
+          <a href="${whatsappLink}" target="_blank" class="whatsapp-link" title="Solicitar orçamento via WhatsApp">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20.52 3.48A11.865 11.865 0 0 0 12 0C5.373 0 0 5.373 0 12c0 2.121.558 4.16 1.616 5.97L0 24l6.174-1.606A11.92 11.92 0 0 0 12 24c6.627 0 12-5.373 12-12a11.96 11.96 0 0 0-3.48-8.52zm-8.57 16.43c-1.63 0-3.19-.44-4.54-1.27l-.33-.2-3.66.95.97-3.57-.22-.36a8.04 8.04 0 0 1-1.24-4.45c0-4.43 3.6-8.04 8.04-8.04 2.15 0 4.16.83 5.68 2.33a7.98 7.98 0 0 1 2.34 5.66c0 4.44-3.6 8.04-8.03 8.04zm4.57-5.91c-.25-.13-1.48-.73-1.71-.81-.23-.08-.4-.13-.57.13s-.65.81-.8.98c-.15.16-.3.18-.55.06-.25-.13-1.05-.39-2-1.22-.74-.66-1.24-1.48-1.39-1.73-.15-.25-.02-.39.11-.52.11-.11.25-.3.38-.45.13-.15.17-.25.25-.42.08-.16.04-.3-.02-.42-.06-.13-.57-1.37-.78-1.87-.2-.5-.4-.43-.57-.44-.15-.01-.32-.01-.49-.01-.16 0-.42.06-.64.3-.23.25-.88.85-.88 2.07 0 1.22.9 2.4 1.03 2.57.13.16 1.78 2.7 4.32 3.78.6.26 1.07.42 1.44.54.6.19 1.15.16 1.58.1.48-.07 1.48-.6 1.69-1.18.2-.58.2-1.08.14-1.18-.07-.1-.25-.16-.5-.29z"/>
+            </svg>
+            Solicitar Orçamento
+          </a>
         `;
+
         resultados.appendChild(div);
       });
     }
