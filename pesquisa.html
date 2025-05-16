@@ -1,42 +1,138 @@
-<script>
-  async function pesquisar() {
-    const termo = document.getElementById("busca").value.toLowerCase();
-    const resultados = document.getElementById("resultados");
-    resultados.innerHTML = "Carregando...";
-
-    const sheetID = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIjGlGfirq-urRkYQKubjuXjtpao-5xGuoRxm1eb3XB1s3OrDAINdf8hmHlJkLSg/pubhtml";
-    const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
-
-    try {
-      const response = await fetch(url);
-      const text = await response.text();
-      const json = JSON.parse(text.substr(47).slice(0, -2));
-      const rows = json.table.rows;
-
-      const encontrados = rows.filter(row => {
-        const nome = row.c[0]?.v?.toLowerCase() || "";
-        return nome.includes(termo);
-      });
-
-      if (encontrados.length === 0) {
-        resultados.innerHTML = "<p>Nenhum resultado encontrado.</p>";
-        return;
-      }
-
-      resultados.innerHTML = "";
-      encontrados.forEach(row => {
-        const nome = row.c[0]?.v || "Sem nome";
-        const local = row.c[1]?.v || "Desconhecido";
-        const ano = row.c[2]?.v || "Sem data";
-        const div = document.createElement("div");
-        div.className = "item";
-        div.innerHTML = `<strong>${nome}</strong><br>Local: ${local}<br>Ano: ${ano}`;
-        resultados.appendChild(div);
-      });
-
-    } catch (err) {
-      resultados.innerHTML = "<p>Erro ao carregar os dados.</p>";
-      console.error(err);
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pesquisa Genealógica - Emigrazione Veneta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
     }
-  }
-</script>
+
+    header {
+      background-color: #002f5f;
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    main {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    button {
+      margin-top: 1rem;
+      background-color: #004080;
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #003060;
+    }
+
+    #resultados {
+      margin-top: 2rem;
+    }
+
+    .item {
+      padding: 0.5rem;
+      border-bottom: 1px solid #ddd;
+    }
+
+    footer {
+      background-color: #002f5f;
+      color: white;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Pesquisa Genealógica</h1>
+    <p>Consulta de nomes da imigração vêneta</p>
+  </header>
+
+  <main>
+    <label for="busca">Digite um sobrenome:</label>
+    <input type="text" id="busca" placeholder="Ex: Battisti, Zambon, Trevisan">
+    <button onclick="pesquisar()">Pesquisar</button>
+
+    <div id="resultados"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Emigrazione Veneta - Cremona</p>
+  </footer>
+
+  <script>
+    async function pesquisar() {
+      const termo = document.getElementById("busca").value.toLowerCase();
+      const resultados = document.getElementById("resultados");
+      resultados.innerHTML = "Carregando...";
+
+      const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIjGlGfirq-urRkYQKubjuXjtpao-5xGuoRxm1eb3XB1s3OrDAINdf8hmHlJkLSg/pub?output=tsv";
+
+      try {
+        const response = await fetch(sheetURL);
+        const tsv = await response.text();
+        const linhas = tsv.trim().split("\n");
+        const cabecalho = linhas[0].split("\t");
+        const dados = linhas.slice(1).map(l => l.split("\t"));
+
+        const encontrados = dados.filter(c => (c[0] || "").toLowerCase().includes(termo));
+
+        if (encontrados.length === 0) {
+          resultados.innerHTML = "<p>Nenhum resultado encontrado.</p>";
+          return;
+        }
+
+        resultados.innerHTML = "";
+        encontrados.forEach(campos => {
+          const nome = campos[0] || "Sem nome";
+          const local = campos[1] || "Desconhecido";
+          const ano = campos[2] || "Sem data";
+
+          const div = document.createElement("div");
+          div.className = "item";
+          div.innerHTML = `<strong>${nome}</strong><br>Local: ${local}<br>Ano: ${ano}`;
+          resultados.appendChild(div);
+        });
+
+      } catch (erro) {
+        resultados.innerHTML = "<p>Erro ao carregar os dados.</p>";
+        console.error(erro);
+      }
+    }
+  </script>
+
+</body>
+</html>
