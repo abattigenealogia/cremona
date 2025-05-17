@@ -154,28 +154,6 @@
       min-height: 100px;
     }
     
-    .loading-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      padding: 1rem;
-    }
-    
-    .loading {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(0,47,95,.3);
-      border-radius: 50%;
-      border-top-color: var(--primary);
-      animation: spin 1s ease-in-out infinite;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
     .error {
       color: var(--error);
       background: var(--error-bg);
@@ -562,11 +540,7 @@
     // Função para carregar dados
     async function carregarDados() {
       const resultados = document.getElementById("resultados");
-      resultados.innerHTML = `
-        <div class="loading-container">
-          <div class="loading"></div>
-        </div>
-      `;
+      resultados.innerHTML = '';
       
       try {
         const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIjGlGfirq-urRkYQKubjuXjtpao-5xGuoRxm1eb3XB1s3OrDAINdf8hmHlJkLSg/pub?gid=294660178&single=true&output=tsv";
@@ -579,8 +553,6 @@
         dados = linhas.map(l => l.split("\t"));
         carregado = true;
         
-        if (resultados.innerHTML.includes("loading-container")) {
-        }
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
         resultados.innerHTML = `
@@ -659,16 +631,12 @@
       }
       
       if (!carregado) {
-        resultados.innerHTML = `
-          <div class="loading-container">
-            <div class="loading"></div>
-          </div>
-        `;
+        resultados.innerHTML = '';
         return;
       }
       
       btnPesquisar.disabled = true;
-      btnPesquisar.innerHTML = '<div class="loading" style="border-top-color: currentColor;"></div> <span>Pesquisando...</span>';
+      btnPesquisar.innerHTML = '<span>Pesquisando...</span>';
       
       await new Promise(resolve => setTimeout(resolve, 500));
       
