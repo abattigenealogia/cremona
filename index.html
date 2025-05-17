@@ -448,15 +448,36 @@
 
     <div id="resultados"></div>
 <div style="text-align: center; margin: 40px 0 0;">
-  <img 
-    src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/Cremona.png" 
-    alt="Logo Cremona" 
-    style="width: 100px; height: 100px; display: block; margin: 0 auto; object-fit: contain;"
-  >
-  <p style="margin: 0; padding: 0; font-size: 14px; color: #333; font-weight: normal; text-align: center; line-height: 1;">
-    Cremona
-  </p>
+  <a href="https://raw.githubusercontent.com/abattigenealogia/cremona/main/mapa.cremona.svg" 
+     target="_blank"
+     style="text-decoration: none; color: inherit; display: inline-block;"
+     title="Ver mapa de Cremona">
+     
+    <!-- Imagem clicável -->
+    <img 
+      src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/Cremona.svg" 
+      alt="Mapa de Cremona" 
+      style="width: 100px; height: 100px; display: block; margin: 0 auto; object-fit: contain; cursor: pointer; transition: all 0.3s ease;"
+      onerror="this.src='https://via.placeholder.com/100x100?text=Logo+Cremona'"
+    >
+    
+    <!-- Texto clicável -->
+    <p style="margin: 0; padding: 0; font-size: 16px; color: #333; font-weight: normal; text-align: center; line-height: 1; cursor: pointer; transition: color 0.3s ease;">
+      Cremona
+    </p>
+  </a>
 </div>
+
+<style>
+  /* Efeito hover (opcional) */
+  a:hover img {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+  a:hover p {
+    color: #002f5f; /* Azul do seu tema */
+  }
+</style>
   </main>
 
   <footer>
