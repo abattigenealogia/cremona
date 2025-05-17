@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -32,7 +31,7 @@
       line-height: 1.6;
     }
     
-    /* HEADER ATUALIZADO */
+    /* HEADER */
     header {
       background-color: var(--secondary);
       color: var(--primary);
@@ -55,6 +54,57 @@
     
     .header-text {
       flex: 1;
+    }
+    
+    /* MENU INTERATIVO */
+    .interactive-menu {
+      margin: 30px 0;
+      font-family: 'Open Sans', sans-serif;
+    }
+    
+    .interactive-menu ul {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .menu-btn {
+      position: relative;
+      display: inline-block;
+      padding: 12px 25px;
+      background-color: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      font-weight: bold;
+    }
+    
+    .menu-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: var(--secondary);
+      transition: all 0.4s ease;
+      border-radius: 30px;
+    }
+    
+    .menu-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      color: var(--primary);
+    }
+    
+    .menu-btn:hover::before {
+      left: 0;
     }
     
     /* MAIN CONTENT */
@@ -203,6 +253,24 @@
       width: 25px;
       height: 25px;
       fill: #25D366;
+    }
+    
+    /* SEÇÕES DO MENU */
+    .content-section {
+      padding: 60px 0;
+      margin: 20px auto;
+      max-width: 800px;
+      border-radius: 8px;
+    }
+    
+    .section-title {
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .bg-light {
+      background-color: var(--light-bg);
     }
     
     /* FOOTER */
@@ -360,6 +428,12 @@
         margin-bottom: 1rem;
       }
       
+      .interactive-menu ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+      
       table {
         display: block;
         overflow-x: auto;
@@ -416,11 +490,32 @@
     <div class="header-container">
       <img src="logo.png" alt="Logo Abatti Genealogia" class="main-logo" />
       <div class="header-text">
-        <h1>Pesquisa </h1>
-        <p>Consulte dados de nascidos na Província de  entre 1866 e 1888</p>
+        <h1>Pesquisa Cremona</h1>
+        <p>Consulte dados de nascidos na Província de Cremona entre 1866 e 1888</p>
       </div>
     </div>
   </header>
+
+  <!-- Menu Interativo -->
+  <nav class="interactive-menu">
+    <ul>
+      <li>
+        <a href="#sobre" class="menu-btn">
+          <span>Sobre a Empresa</span>
+        </a>
+      </li>
+      <li>
+        <a href="#servicos" class="menu-btn">
+          <span>Nossos Serviços</span>
+        </a>
+      </li>
+      <li>
+        <a href="#contato" class="menu-btn">
+          <span>Contato</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 
   <main>
     <label for="busca">Digite um sobrenome para iniciar a pesquisa:</label>
@@ -437,38 +532,68 @@
         onkeydown="if(event.key === 'Enter') pesquisar()">
       <div id="sugestoes" class="sugestoes" role="listbox"></div>
     </div>
-<button onclick="pesquisar()" id="btnPesquisar">
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
-    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
-    <circle cx="11" cy="11" r="8"></circle>
-    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-  </svg>
-  <span>Pesquisar</span>
-</button>
+    <button onclick="pesquisar()" id="btnPesquisar">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <span>Pesquisar</span>
+    </button>
 
     <div id="resultados"></div>
-<div style="text-align: center; margin: 40px 0 0;">
-  <a href="https://raw.githubusercontent.com/abattigenealogia/cremona/main/mapa.cremona.svg" 
-     target="_blank"
-     style="text-decoration: none; color: inherit; display: inline-block;"
-     title="Abrir mapa interativo">
-     
-    <!-- Imagem clicável -->
-    <img 
-      src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/Cremona.png" 
-      alt="Mapa de Cremona" 
-      style="width: 100px; height: 100px; display: block; margin: 0 auto; object-fit: contain; cursor: pointer;"
-      onerror="this.src='https://via.placeholder.com/100x100?text=Cremona'"
-    >
     
-    <!-- Textos em blocos separados -->
-    <div style="margin-top: 4px;">
-      <div style="font-size: 16px; color: #333; line-height: 1.2;">Cremona</div>
-      <div style="font-size: 12px; color: #666; line-height: 1.2; margin-top: 2px;">(ver mapa)</div>
+    <div style="text-align: center; margin: 40px 0 0;">
+      <a href="https://raw.githubusercontent.com/abattigenealogia/cremona/main/mapa.cremona.svg" 
+         target="_blank"
+         style="text-decoration: none; color: inherit; display: inline-block;"
+         title="Abrir mapa interativo">
+         
+        <img 
+          src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/Cremona.png" 
+          alt="Mapa de Cremona" 
+          style="width: 100px; height: 100px; display: block; margin: 0 auto; object-fit: contain; cursor: pointer;"
+          onerror="this.src='https://via.placeholder.com/100x100?text=Cremona'"
+        >
+        
+        <div style="margin-top: 4px;">
+          <div style="font-size: 16px; color: #333; line-height: 1.2;">Cremona</div>
+          <div style="font-size: 12px; color: #666; line-height: 1.2; margin-top: 2px;">(ver mapa)</div>
+        </div>
+      </a>
     </div>
-  </a>
-</div>
   </main>
+
+  <!-- Seções do Menu -->
+  <section id="sobre" class="content-section bg-light">
+    <div style="padding: 20px;">
+      <h2 class="section-title">Sobre a Empresa</h2>
+      <p style="text-align: center;">Especializada em pesquisa genealógica na região de Cremona, nossa empresa tem mais de 20 anos de experiência em reconstrução de árvores familiares e história familiar.</p>
+    </div>
+  </section>
+
+  <section id="servicos" class="content-section">
+    <div style="padding: 20px;">
+      <h2 class="section-title">Nossos Serviços</h2>
+      <div style="text-align: center;">
+        <p>• Pesquisa genealógica profissional</p>
+        <p>• Acesso a registros históricos</p>
+        <p>• Certidões e documentação</p>
+        <p>• Consultoria em cidadania italiana</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato" class="content-section bg-light">
+    <div style="padding: 20px;">
+      <h2 class="section-title">Contato</h2>
+      <div style="text-align: center;">
+        <p>Entre em contato para orçamentos e consultas:</p>
+        <p>Email: contato@abattigenealogia.com</p>
+        <p>WhatsApp: (45) 92002-7919</p>
+      </div>
+    </div>
+  </section>
 
   <footer>
     <div class="counters">
@@ -484,19 +609,19 @@
     </div>
     
     <div class="social-links">
-<a href="https://www.instagram.com/abattigenealogia" target="_blank" rel="noopener noreferrer" class="social-link">
-    <img src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/instagram.png" 
-         alt="Instagram" 
-         width="28" 
-         height="24"
-         style="vertical-align: middle; display: inline-block;">
-    @abattigenealogia
-</a>
-      
-   <a href="https://api.whatsapp.com/send?phone=5545920027919" target="_blank" rel="noopener noreferrer" class="social-link">
-    <img src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/whatsapp.png" alt="WhatsApp" width="24" height="24">
-    (45) 92002-7919
-</a>
+      <a href="https://www.instagram.com/abattigenealogia" target="_blank" rel="noopener noreferrer" class="social-link">
+        <img src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/instagram.png" 
+             alt="Instagram" 
+             width="28" 
+             height="24"
+             style="vertical-align: middle; display: inline-block;">
+        @abattigenealogia
+      </a>
+        
+      <a href="https://api.whatsapp.com/send?phone=5545920027919" target="_blank" rel="noopener noreferrer" class="social-link">
+        <img src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/whatsapp.png" alt="WhatsApp" width="24" height="24">
+        (45) 92002-7919
+      </a>
     </div>
     
     <div>
@@ -809,12 +934,29 @@
       document.body.style.overflow = 'auto';
     }
 
+    // Rolagem suave para o menu
+    document.querySelectorAll('.menu-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      });
+    });
+
     // Fechar modal ao clicar fora
     window.onclick = function(event) {
       if (event.target.className === 'modal') {
-        fecharModal(event.target.id);
+        document.querySelectorAll('.modal').forEach(modal => {
+          modal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        });
       }
-    }
+    };
 
     // Fechar com ESC
     document.onkeydown = function(evt) {
@@ -828,46 +970,4 @@
       }
     };
 
-    // Fechar sugestões ao clicar fora
-    document.addEventListener('click', (e) => {
-      const sugestoes = document.getElementById("sugestoes");
-      const input = document.getElementById("busca");
-      
-      if (e.target !== input && e.target !== sugestoes && !sugestoes.contains(e.target)) {
-        sugestoes.classList.remove("visible");
-      }
-    });
-    
-    // Contadores
-    function updateCounters() {
-      // Contador de visitas (usando localStorage)
-      let visitCount = localStorage.getItem('visitCount') || 0;
-      visitCount = parseInt(visitCount) + 1;
-      localStorage.setItem('visitCount', visitCount);
-      document.getElementById('visitCounter').textContent = visitCount.toLocaleString();
-      
-      // Contador de nomes e sobrenomes únicos
-      if (carregado && dados.length > 0) {
-        const nomesUnicos = new Set(dados.map(item => item[0].toLowerCase().trim()));
-        const sobrenomesUnicos = new Set(dados.map(item => {
-          const nomeCompleto = item[0].toLowerCase().trim();
-          return nomeCompleto.split(' ')[0]; // Pega o primeiro nome como sobrenome
-        }));
-        
-        document.getElementById('uniqueNamesCounter').textContent = nomesUnicos.size.toLocaleString();
-        document.getElementById('uniqueSurnamesCounter').textContent = sobrenomesUnicos.size.toLocaleString();
-      }
-    }
-    
-    // Chamar a função quando os dados forem carregados
-    document.addEventListener('DOMContentLoaded', function() {
-      const checkDataLoaded = setInterval(() => {
-        if (carregado) {
-          updateCounters();
-          clearInterval(checkDataLoaded);
-        }
-      }, 500);
-    });
-  </script>
-</body>
-</html>
+    // F
