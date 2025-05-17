@@ -239,12 +239,6 @@
       gap: 0.8rem;
     }
     
-    footer img {
-      max-height: 50px;
-      height: auto;
-      width: auto;
-    }
-    
     footer a {
       color: var(--primary);
       text-decoration: none;
@@ -441,8 +435,6 @@
   </main>
 
   <footer>
-    <img src="logo.png" alt="Logo Abatti Genealogia" width="120" height="60" />
-    
     <div class="counters">
       <div class="counter-item">
         <span id="visitCounter">0</span> visitas
@@ -573,7 +565,6 @@
       resultados.innerHTML = `
         <div class="loading-container">
           <div class="loading"></div>
-          <span>Carregando banco de dados...</span>
         </div>
       `;
       
@@ -588,7 +579,7 @@
         dados = linhas.map(l => l.split("\t"));
         carregado = true;
         
-        if (resultados.innerHTML.includes("Carregando banco de dados")) {
+        if (resultados.innerHTML.includes("loading-container")) {
         }
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
@@ -671,7 +662,6 @@
         resultados.innerHTML = `
           <div class="loading-container">
             <div class="loading"></div>
-            <span>Carregando dados, aguarde...</span>
           </div>
         `;
         return;
