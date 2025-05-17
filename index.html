@@ -814,11 +814,25 @@
     
     // Contadores
     function updateCounters() {
-      // Contador de visitas (usando localStorage)
-      let visitCount = localStorage.getItem('visitCount') || 0;
-      visitCount = parseInt(visitCount) + 1;
-      localStorage.setItem('visitCount', visitCount);
-      document.getElementById('visitCounter').textContent = visitCount.toLocaleString();
+     <script>
+// Contador de visitas (combinando localStorage + API)
+async function updateCounters() {
+  // Contador local (opcional)
+  let localCount = localStorage.getItem('visitCount') || 0;
+  localCount = parseInt(localCount) + 1;
+  localStorage.setItem('visitCount', localCount);
+  
+  // Contador global (usando API gratuita)
+  try {
+    const response = await fetch('https://api.countapi.xyz/hit/abattigenealogia/visits');
+    const data = await response.json();
+    document.getElementById('visitCounter').textContent = data.value.toLocaleString();
+  } catch (error) {
+    document.getElementById('visitCounter').textContent = localCount.toLocaleString();
+  }
+}
+updateCounters();
+</script>
       
       // Contador de nomes e sobrenomes únicos
       if (carregado && dados.length > 0) {
