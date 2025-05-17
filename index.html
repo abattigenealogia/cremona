@@ -448,14 +448,23 @@
 
     <div id="resultados"></div>
 <div style="text-align: center; margin: 40px 0 0;">
-  <img 
-    src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/Cremona.png" 
-    alt="Logo Cremona" 
-    style="width: 100px; height: 100px; display: block; margin: 0 auto; object-fit: contain;"
-  >
-  <p style="margin: 0; padding: 0; font-size: 14px; color: #333; font-weight: normal; text-align: center; line-height: 1;">
-    Cremona
-  </p>
+  <a href="https://raw.githubusercontent.com/abattigenealogia/cremona/main/mapa.cremona.svg" 
+     target="_blank"
+     style="text-decoration: none; color: inherit; display: inline-block;">
+     
+    <!-- Imagem clicável -->
+    <img 
+      src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/Cremona.png" 
+      alt="Mapa de Cremona" 
+      style="width: 100px; height: 100px; display: block; margin: 0 auto; object-fit: contain; cursor: pointer;"
+      onerror="this.src='https://via.placeholder.com/100x100?text=Cremona'"
+    >
+    
+    <!-- Texto clicável com "(ver mapa)" -->
+    <p style="margin: 0; padding: 0; font-size: 16px; color: #333; font-weight: normal; text-align: center; line-height: 1; cursor: pointer;">
+      Cremona <span style="font-size: 12px; color: #666;">(ver mapa)</span>
+    </p>
+  </a>
 </div>
   </main>
 
