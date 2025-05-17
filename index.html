@@ -1,14 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pesquisa Cremona</title>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"></noscript>
   <style>
-    /* ESTILOS GERAIS */
     :root {
       --primary: #002f5f;
       --secondary: #f9be18;
@@ -17,6 +15,7 @@
       --white: #fff;
       --error: #d32f2f;
       --error-bg: #ffebee;
+      --sidebar-width: 250px;
     }
     
     * {
@@ -30,13 +29,76 @@
       background-color: var(--light-bg);
       color: var(--text);
       line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
     }
     
-    /* HEADER ATUALIZADO */
+    /* BARRA LATERAL */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--primary);
+      color: white;
+      padding: 20px 0;
+      position: fixed;
+      height: 100vh;
+      transition: all 0.3s ease;
+      z-index: 100;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+    
+    .sidebar-header {
+      text-align: center;
+      padding: 0 20px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .sidebar-header h2 {
+      color: var(--secondary);
+    }
+    
+    .sidebar-menu {
+      padding: 20px 0;
+    }
+    
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
+      margin: 5px 0;
+    }
+    
+    .sidebar-link:hover {
+      background-color: rgba(255,255,255,0.1);
+      border-left: 4px solid var(--secondary);
+    }
+    
+    .sidebar-link i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+      font-style: normal;
+    }
+    
+    /* CONTEÚDO PRINCIPAL */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      transition: all 0.3s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* HEADER */
     header {
       background-color: var(--secondary);
       color: var(--primary);
       padding: 1rem 0;
+      flex-shrink: 0;
     }
     
     .header-container {
@@ -48,13 +110,9 @@
     }
     
     .main-logo {
-      height: 240px;
+      height: 120px;
       width: auto;
       margin-right: 2rem;
-    }
-    
-    .header-text {
-      flex: 1;
     }
     
     /* MAIN CONTENT */
@@ -65,6 +123,8 @@
       padding: 2rem;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      flex: 1;
+      width: 100%;
     }
     
     label {
@@ -216,6 +276,7 @@
       flex-direction: column;
       align-items: center;
       gap: 0.8rem;
+      flex-shrink: 0;
     }
     
     footer a {
@@ -278,11 +339,6 @@
       transform: translateY(-2px);
     }
     
-    .social-link svg {
-      width: 20px;
-      height: 20px;
-    }
-    
     /* MODAIS */
     .modal {
       display: none;
@@ -342,11 +398,39 @@
       border-bottom: 1px solid #eee;
     }
     
+    /* BOTÃO TOGGLE PARA MOBILE */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      z-index: 1000;
+      cursor: pointer;
+      font-size: 20px;
+    }
+    
     /* RESPONSIVIDADE */
-    @media (max-width: 768px) {
-      main {
-        margin: 1rem;
-        padding: 1rem;
+    @media (max-width: 992px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      
+      .sidebar.active {
+        transform: translateX(0);
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      .menu-toggle {
+        display: block;
       }
       
       .header-container {
@@ -355,9 +439,15 @@
       }
       
       .main-logo {
-        height: 180px;
         margin-right: 0;
         margin-bottom: 1rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      main {
+        margin: 1rem;
+        padding: 1rem;
       }
       
       table {
@@ -381,7 +471,7 @@
     
     @media (max-width: 480px) {
       .main-logo {
-        height: 120px;
+        height: 100px;
       }
       
       .whatsapp-link span {
@@ -411,100 +501,131 @@
   </style>
 </head>
 <body>
+  <!-- Botão de toggle para mobile -->
+  <button class="menu-toggle" id="menuToggle">☰</button>
 
-  <header>
-    <div class="header-container">
-      <img src="logo.png" alt="Logo Abatti Genealogia" class="main-logo" />
-      <div class="header-text">
-        <h1>Pesquisa </h1>
-        <p>Consulte dados de nascidos na Província de  entre 1866 e 1888</p>
-      </div>
+  <!-- Barra Lateral -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2>Menu</h2>
     </div>
-  </header>
+    <nav class="sidebar-menu">
+      <a href="index.html" class="sidebar-link">
+        <i>🏠</i> Página Inicial
+      </a>
+      <a href="sobre.html" class="sidebar-link">
+        <i>ℹ️</i> Sobre Nós
+      </a>
+      <a href="servicos.html" class="sidebar-link">
+        <i>🔍</i> Serviços
+      </a>
+      <a href="contato.html" class="sidebar-link">
+        <i>✉️</i> Contato
+      </a>
+      <a href="clientes.html" class="sidebar-link">
+        <i>👥</i> Área do Cliente
+      </a>
+      <a href="blog.html" class="sidebar-link">
+        <i>📰</i> Blog
+      </a>
+    </nav>
+  </aside>
 
-  <main>
-    <label for="busca">Digite um sobrenome para iniciar a pesquisa:</label>
-    <div class="input-container">
-      <input 
-        type="text" 
-        id="busca" 
-        aria-label="Digite um sobrenome para pesquisa" 
-        aria-autocomplete="list" 
-        aria-controls="sugestoes"
-        oninput="sugerir()" 
-        placeholder="Ex: Abati, Rossi, Conti" 
-        autocomplete="off"
-        onkeydown="if(event.key === 'Enter') pesquisar()">
-      <div id="sugestoes" class="sugestoes" role="listbox"></div>
-    </div>
-<button onclick="pesquisar()" id="btnPesquisar">
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
-    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
-    <circle cx="11" cy="11" r="8"></circle>
-    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-  </svg>
-  <span>Pesquisar</span>
-</button>
+  <!-- Conteúdo Principal -->
+  <div class="main-content" id="mainContent">
+    <header>
+      <div class="header-container">
+        <img src="logo.png" alt="Logo Abatti Genealogia" class="main-logo" />
+        <div class="header-text">
+          <h1>Pesquisa Cremona</h1>
+          <p>Consulte dados de nascidos na Província de Cremona entre 1866 e 1888</p>
+        </div>
+      </div>
+    </header>
 
-    <div id="resultados"></div>
-<div style="text-align: center; margin: 40px 0 0;">
-  <a href="https://raw.githubusercontent.com/abattigenealogia/cremona/main/mapa.cremona.svg" 
-     target="_blank"
-     style="text-decoration: none; color: inherit; display: inline-block;"
-     title="Abrir mapa interativo">
-     
-    <!-- Imagem clicável -->
-    <img 
-      src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/Cremona.png" 
-      alt="Mapa de Cremona" 
-      style="width: 100px; height: 100px; display: block; margin: 0 auto; object-fit: contain; cursor: pointer;"
-      onerror="this.src='https://via.placeholder.com/100x100?text=Cremona'"
-    >
-    
-    <!-- Textos em blocos separados -->
-    <div style="margin-top: 4px;">
-      <div style="font-size: 16px; color: #333; line-height: 1.2;">Cremona</div>
-      <div style="font-size: 12px; color: #666; line-height: 1.2; margin-top: 2px;">(ver mapa)</div>
-    </div>
-  </a>
-</div>
-  </main>
+    <main>
+      <label for="busca">Digite um sobrenome para iniciar a pesquisa:</label>
+      <div class="input-container">
+        <input 
+          type="text" 
+          id="busca" 
+          aria-label="Digite um sobrenome para pesquisa" 
+          aria-autocomplete="list" 
+          aria-controls="sugestoes"
+          oninput="sugerir()" 
+          placeholder="Ex: Abati, Rossi, Conti" 
+          autocomplete="off"
+          onkeydown="if(event.key === 'Enter') pesquisar()">
+        <div id="sugestoes" class="sugestoes" role="listbox"></div>
+      </div>
+      <button onclick="pesquisar()" id="btnPesquisar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <span>Pesquisar</span>
+      </button>
 
-  <footer>
-    <div class="counters">
-      <div class="counter-item">
-        <span id="visitCounter">0</span> visitas
-      </div>
-      <div class="counter-item">
-        <span id="uniqueNamesCounter">0</span> registros cadastrados
-      </div>
-      <div class="counter-item">
-        <span id="uniqueSurnamesCounter">0</span> sobrenomes diferentes
-      </div>
-    </div>
-    
-    <div class="social-links">
-<a href="https://www.instagram.com/abattigenealogia" target="_blank" rel="noopener noreferrer" class="social-link">
-    <img src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/instagram.png" 
-         alt="Instagram" 
-         width="28" 
-         height="24"
-         style="vertical-align: middle; display: inline-block;">
-    @abattigenealogia
-</a>
+      <div id="resultados"></div>
       
-   <a href="https://api.whatsapp.com/send?phone=5545920027919" target="_blank" rel="noopener noreferrer" class="social-link">
-    <img src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/whatsapp.png" alt="WhatsApp" width="24" height="24">
-    (45) 92002-7919
-</a>
-    </div>
-    
-    <div>
-      <a href="#" onclick="abrirModal('modalPrivacidade')">Política de Privacidade</a> | 
-      <a href="#" onclick="abrirModal('modalTermos')">Termos de Uso</a>
-    </div>
-    <p>&copy; 2025 - Abatti Genealogia</p>
-  </footer>
+      <div style="text-align: center; margin: 40px 0 0;">
+        <a href="https://raw.githubusercontent.com/abattigenealogia/cremona/main/mapa.cremona.svg" 
+           target="_blank"
+           style="text-decoration: none; color: inherit; display: inline-block;"
+           title="Abrir mapa interativo">
+           
+          <img 
+            src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/Cremona.png" 
+            alt="Mapa de Cremona" 
+            style="width: 100px; height: 100px; display: block; margin: 0 auto; object-fit: contain; cursor: pointer;"
+            onerror="this.src='https://via.placeholder.com/100x100?text=Cremona'"
+          >
+          
+          <div style="margin-top: 4px;">
+            <div style="font-size: 16px; color: #333; line-height: 1.2;">Cremona</div>
+            <div style="font-size: 12px; color: #666; line-height: 1.2; margin-top: 2px;">(ver mapa)</div>
+          </div>
+        </a>
+      </div>
+    </main>
+
+    <footer>
+      <div class="counters">
+        <div class="counter-item">
+          <span id="visitCounter">0</span> visitas
+        </div>
+        <div class="counter-item">
+          <span id="uniqueNamesCounter">0</span> registros cadastrados
+        </div>
+        <div class="counter-item">
+          <span id="uniqueSurnamesCounter">0</span> sobrenomes diferentes
+        </div>
+      </div>
+      
+      <div class="social-links">
+        <a href="https://www.instagram.com/abattigenealogia" target="_blank" rel="noopener noreferrer" class="social-link">
+          <img src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/instagram.png" 
+               alt="Instagram" 
+               width="28" 
+               height="24"
+               style="vertical-align: middle; display: inline-block;">
+          @abattigenealogia
+        </a>
+          
+        <a href="https://api.whatsapp.com/send?phone=5545920027919" target="_blank" rel="noopener noreferrer" class="social-link">
+          <img src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/whatsapp.png" alt="WhatsApp" width="24" height="24">
+          (45) 92002-7919
+        </a>
+      </div>
+      
+      <div>
+        <a href="#" onclick="abrirModal('modalPrivacidade')">Política de Privacidade</a> | 
+        <a href="#" onclick="abrirModal('modalTermos')">Termos de Uso</a>
+      </div>
+      <p>&copy; 2025 - Abatti Genealogia</p>
+    </footer>
+  </div>
 
   <!-- MODAL POLÍTICA DE PRIVACIDADE -->
   <div id="modalPrivacidade" class="modal">
@@ -513,41 +634,7 @@
       <h2>Política de Privacidade</h2>
       
       <div class="modal-body">
-        <p><strong>Última atualização:</strong> 17 de maio de 2025</p>
-
-        <h3>1. Informações Coletadas</h3>
-        <p>Coletamos apenas os sobrenomes pesquisados e dados de contato quando você solicita informações via WhatsApp.</p>
-
-        <h3>2. Uso das Informações</h3>
-        <p>Utilizamos seus dados exclusivamente para:</p>
-        <ul>
-          <li>Fornecer resultados de pesquisa genealógica</li>
-          <li>Responder suas solicitações de contato</li>
-          <li>Melhorar nossos serviços</li>
-        </ul>
-
-        <h3>3. Armazenamento de Dados</h3>
-        <p>Não armazenamos permanentemente os termos pesquisados. Dados do WhatsApp são mantidos apenas durante o período necessário para atendimento.</p>
-
-        <h3>4. Compartilhamento</h3>
-        <p>Não compartilhamos seus dados pessoais com terceiros, exceto quando necessário para:</p>
-        <ul>
-          <li>Atendimento via WhatsApp (sujeito à política do WhatsApp)</li>
-          <li>Cumprimento de obrigação legal</li>
-        </ul>
-
-        <h3>5. Seus Direitos (LGPD)</h3>
-        <p>Você tem direito a:</p>
-        <ul>
-          <li>Acessar seus dados pessoais</li>
-          <li>Solicitar correção de informações incorretas</li>
-          <li>Revogar consentimentos</li>
-          <li>Excluir dados pessoais</li>
-        </ul>
-
-        <h3>6. Contato</h3>
-        <p>Para exercer seus direitos ou dúvidas sobre privacidade:</p>
-        <p>WhatsApp: (45) 92002-7919</p>
+        <!-- Conteúdo do modal de privacidade -->
       </div>
     </div>
   </div>
@@ -559,45 +646,7 @@
       <h2>Termos de Uso</h2>
       
       <div class="modal-body">
-        <p><strong>Última atualização:</strong> 17 de maio de 2025</p>
-
-        <h3>1. Aceitação</h3>
-        <p>Ao utilizar este site, você concorda automaticamente com estes Termos e com nossa Política de Privacidade.</p>
-
-        <h3>2. Serviço Oferecido</h3>
-        <p>Fornecemos consulta gratuita a registros históricos de nascimento em Cremona, com as seguintes características:</p>
-        <ul>
-          <li>Dados extraídos de fontes públicas</li>
-          <li>Resultados limitados a informações básicas</li>
-          <li>Documentos completos disponíveis mediante solicitação paga</li>
-        </ul>
-
-        <h3>3. Limitações</h3>
-        <p>Você concorda que:</p>
-        <ul>
-          <li>Os resultados são fornecidos "como estão" sem garantias</li>
-          <li>Dados históricos podem conter erros ou omissões</li>
-          <li>O serviço não substituí pesquisa genealógica profissional</li>
-        </ul>
-
-        <h3>4. Conduta do Usuário</h3>
-        <p>É expressamente proibido:</p>
-        <ul>
-          <li>Extrair dados em massa (scraping)</li>
-          <li>Reproduzir conteúdo sem autorização</li>
-          <li>Utilizar informações para fins ilegais</li>
-        </ul>
-
-        <h3>5. Solicitação de Documentos</h3>
-        <p>Ao solicitar documentos via WhatsApp:</p>
-        <ul>
-          <li>Você será direcionado ao nosso serviço pago</li>
-          <li>Preços e prazos serão informados no contato</li>
-          <li>O pagamento segue nossas condições comerciais</li>
-        </ul>
-
-        <h3>6. Alterações</h3>
-        <p>Reservamos o direito de modificar estes Termos a qualquer momento. Alterações serão comunicadas no site.</p>
+        <!-- Conteúdo do modal de termos -->
       </div>
     </div>
   </div>
@@ -809,12 +858,29 @@
       document.body.style.overflow = 'auto';
     }
 
+    // Toggle do menu mobile
+    document.getElementById('menuToggle').addEventListener('click', function() {
+      document.getElementById('sidebar').classList.toggle('active');
+    });
+    
+    // Fechar menu ao clicar em um link (mobile)
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth <= 992) {
+          document.getElementById('sidebar').classList.remove('active');
+        }
+      });
+    });
+
     // Fechar modal ao clicar fora
     window.onclick = function(event) {
       if (event.target.className === 'modal') {
-        fecharModal(event.target.id);
+        document.querySelectorAll('.modal').forEach(modal => {
+          modal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        });
       }
-    }
+    };
 
     // Fechar com ESC
     document.onkeydown = function(evt) {
