@@ -253,6 +253,35 @@
       font-size: 1.2rem;
     }
     
+    /* REDES SOCIAIS */
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      color: #001f3f;
+      transform: translateY(-2px);
+    }
+    
+    .social-link svg {
+      width: 20px;
+      height: 20px;
+    }
+    
     /* MODAIS */
     .modal {
       display: none;
@@ -344,7 +373,7 @@
         padding: 20px;
       }
       
-      .counters {
+      .counters, .social-links {
         gap: 1rem;
       }
     }
@@ -367,13 +396,15 @@
         margin: 0.5rem 0;
       }
       
-      .counter-item {
+      .counter-item, .social-link {
         padding: 0.3rem 0.8rem;
         font-size: 0.9rem;
       }
       
-      .counters {
+      .counters, .social-links {
         gap: 0.5rem;
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
@@ -425,6 +456,24 @@
       </div>
     </div>
     
+    <div class="social-links">
+      <a href="https://www.instagram.com/abattigenealogia" target="_blank" rel="noopener noreferrer" class="social-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+        @abattigenealogia
+      </a>
+      
+      <a href="https://api.whatsapp.com/send?phone=5545920027919" target="_blank" rel="noopener noreferrer" class="social-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#25D366">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-6.29-12.968c-5.297 0-9.598 4.301-9.598 9.6 0 2.117.693 4.078 1.871 5.662L2.056 21l3.206-.838a9.585 9.585 0 0 0 4.627 1.183c5.297 0 9.598-4.301 9.598-9.599 0-5.298-4.301-9.599-9.598-9.599"></path>
+        </svg>
+        (45) 92002-7919
+      </a>
+    </div>
+    
     <div>
       <a href="#" onclick="abrirModal('modalPrivacidade')">Política de Privacidade</a> | 
       <a href="#" onclick="abrirModal('modalTermos')">Termos de Uso</a>
@@ -473,7 +522,7 @@
 
         <h3>6. Contato</h3>
         <p>Para exercer seus direitos ou dúvidas sobre privacidade:</p>
-        <p>WhatsApp: (45) 9200-27919</p>
+        <p>WhatsApp: (45) 92002-7919</p>
       </div>
     </div>
   </div>
