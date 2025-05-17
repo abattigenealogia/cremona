@@ -31,22 +31,29 @@
       line-height: 1.6;
     }
     
-    /* HEADER */
+    /* HEADER ATUALIZADO */
     header {
       background-color: var(--secondary);
       color: var(--primary);
-      padding: 2rem 1rem;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
+      padding: 1rem 0;
     }
     
-    header img {
-      max-height: 80px;
-      height: auto;
+    .header-container {
+      display: flex;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+    
+    .main-logo {
+      height: 240px;
       width: auto;
+      margin-right: 2rem;
+    }
+    
+    .header-text {
+      flex: 1;
     }
     
     /* MAIN CONTENT */
@@ -340,12 +347,15 @@
         padding: 1rem;
       }
       
-      header {
-        padding: 1.5rem 1rem;
+      .header-container {
+        flex-direction: column;
+        text-align: center;
       }
       
-      header img {
-        max-height: 60px;
+      .main-logo {
+        height: 180px;
+        margin-right: 0;
+        margin-bottom: 1rem;
       }
       
       table {
@@ -368,6 +378,10 @@
     }
     
     @media (max-width: 480px) {
+      .main-logo {
+        height: 120px;
+      }
+      
       .whatsapp-link span {
         display: none;
       }
@@ -396,12 +410,12 @@
 
   <header>
     <div class="header-container">
-    <img src="logo.png" alt="Logo Abatti Genealogia" class="main-logo" />
-    <div class="header-text">
-      <h1>Pesquisa Cremona</h1>
-      <p>Consulte dados de nascidos em Cremona entre 1866 e 1888</p>
+      <img src="logo.png" alt="Logo Abatti Genealogia" class="main-logo" />
+      <div class="header-text">
+        <h1>Pesquisa Cremona</h1>
+        <p>Consulte dados de nascidos em Cremona entre 1866 e 1888</p>
+      </div>
     </div>
-  </div>
   </header>
 
   <main>
