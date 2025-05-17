@@ -250,6 +250,30 @@
       color: #001f3f;
     }
     
+    /* CONTADORES */
+    .counters {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .counter-item {
+      background-color: var(--primary);
+      color: var(--secondary);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .counter-item span {
+      font-size: 1.2rem;
+    }
+    
     /* MODAIS */
     .modal {
       display: none;
@@ -337,6 +361,10 @@
       .modal-content {
         padding: 20px;
       }
+      
+      .counters {
+        gap: 1rem;
+      }
     }
     
     @media (max-width: 480px) {
@@ -351,6 +379,15 @@
       footer a {
         display: block;
         margin: 0.5rem 0;
+      }
+      
+      .counter-item {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.9rem;
+      }
+      
+      .counters {
+        gap: 0.5rem;
       }
     }
   </style>
@@ -387,6 +424,19 @@
 
   <footer>
     <img src="logo.png" alt="Logo Abatti Genealogia" width="120" height="60" />
+    
+    <div class="counters">
+      <div class="counter-item">
+        <span id="visitCounter">0</span> visitas
+      </div>
+      <div class="counter-item">
+        <span id="uniqueNamesCounter">0</span> nomes diferentes
+      </div>
+      <div class="counter-item">
+        <span id="uniqueSurnamesCounter">0</span> sobrenomes diferentes
+      </div>
+    </div>
+    
     <div>
       <a href="#" onclick="abrirModal('modalPrivacidade')">Política de Privacidade</a> | 
       <a href="#" onclick="abrirModal('modalTermos')">Termos de Uso</a>
@@ -736,6 +786,37 @@
       if (e.target !== input && e.target !== sugestoes && !sugestoes.contains(e.target)) {
         sugestoes.classList.remove("visible");
       }
+    });
+    
+    // Contadores
+    function updateCounters() {
+      // Contador de visitas (usando localStorage)
+      let visitCount = localStorage.getItem('visitCount') || 0;
+      visitCount = parseInt(visitCount) + 1;
+      localStorage.setItem('visitCount', visitCount);
+      document.getElementById('visitCounter').textContent = visitCount.toLocaleString();
+      
+      // Contador de nomes e sobrenomes únicos
+      if (carregado && dados.length > 0) {
+        const nomesUnicos = new Set(dados.map(item => item[0].toLowerCase().trim()));
+        const sobrenomesUnicos = new Set(dados.map(item => {
+          const nomeCompleto = item[0].toLowerCase().trim();
+          return nomeCompleto.split(' ')[0]; // Pega o primeiro nome como sobrenome
+        }));
+        
+        document.getElementById('uniqueNamesCounter').textContent = nomesUnicos.size.toLocaleString();
+        document.getElementById('uniqueSurnamesCounter').textContent = sobrenomesUnicos.size.toLocaleString();
+      }
+    }
+    
+    // Chamar a função quando os dados forem carregados
+    document.addEventListener('DOMContentLoaded', function() {
+      const checkDataLoaded = setInterval(() => {
+        if (carregado) {
+          updateCounters();
+          clearInterval(checkDataLoaded);
+        }
+      }, 500);
     });
   </script>
 </body>
