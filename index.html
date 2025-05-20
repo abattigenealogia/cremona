@@ -503,7 +503,7 @@
 </head>
 <body>
   <!-- Botão de toggle para mobile -->
-  <button class="menu-toggle" id="menuToggle">☰</button>
+  <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">☰</button>
 
   <!-- Barra Lateral -->
   <aside class="sidebar" id="sidebar">
@@ -628,11 +628,25 @@
   <!-- MODAL POLÍTICA DE PRIVACIDADE -->
   <div id="modalPrivacidade" class="modal">
     <div class="modal-content">
-      <button class="close-modal" onclick="fecharModal('modalPrivacidade')">×</button>
+      <button class="close-modal" onclick="fecharModal('modalPrivacidade')" aria-label="Fechar modal">×</button>
       <h2>Política de Privacidade</h2>
       
       <div class="modal-body">
-        <!-- Conteúdo do modal de privacidade -->
+        <p>Esta política de privacidade descreve como coletamos, usamos e protegemos suas informações pessoais quando você utiliza nosso serviço.</p>
+        
+        <h3>Informações que coletamos</h3>
+        <p>Podemos coletar informações como nome, e-mail e dados de pesquisa quando você utiliza nosso site.</p>
+        
+        <h3>Como usamos suas informações</h3>
+        <p>Utilizamos suas informações para:</p>
+        <ul>
+          <li>Fornecer e melhorar nossos serviços</li>
+          <li>Responder a solicitações e perguntas</li>
+          <li>Enviar comunicações importantes</li>
+        </ul>
+        
+        <h3>Compartilhamento de informações</h3>
+        <p>Não compartilhamos suas informações pessoais com terceiros, exceto quando necessário para fornecer nossos serviços ou quando exigido por lei.</p>
       </div>
     </div>
   </div>
@@ -640,11 +654,23 @@
   <!-- MODAL TERMOS DE USO -->
   <div id="modalTermos" class="modal">
     <div class="modal-content">
-      <button class="close-modal" onclick="fecharModal('modalTermos')">×</button>
+      <button class="close-modal" onclick="fecharModal('modalTermos')" aria-label="Fechar modal">×</button>
       <h2>Termos de Uso</h2>
       
       <div class="modal-body">
-        <!-- Conteúdo do modal de termos -->
+        <p>Ao utilizar este site, você concorda com estes termos de serviço.</p>
+        
+        <h3>Uso do Serviço</h3>
+        <p>Você concorda em usar este serviço apenas para fins legais e de acordo com estes termos.</p>
+        
+        <h3>Propriedade Intelectual</h3>
+        <p>Todo o conteúdo deste site, incluindo textos, gráficos e logotipos, é propriedade da Abatti Genealogia e protegido por leis de direitos autorais.</p>
+        
+        <h3>Limitação de Responsabilidade</h3>
+        <p>Não nos responsabilizamos por quaisquer danos diretos, indiretos ou consequenciais resultantes do uso ou incapacidade de usar este serviço.</p>
+        
+        <h3>Alterações nos Termos</h3>
+        <p>Reservamo-nos o direito de modificar estes termos a qualquer momento. O uso continuado do serviço após tais alterações constitui sua aceitação dos novos termos.</p>
       </div>
     </div>
   </div>
@@ -674,6 +700,8 @@
         dados = linhas.map(l => l.split("\t"));
         carregado = true;
         
+        // Atualizar contadores após carregar dados
+        updateCounters();
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
         resultados.innerHTML = `
@@ -727,6 +755,7 @@
           div.onkeydown = (e) => {
             if (e.key === 'Enter') selecionarSugestao(s);
           };
+          div.setAttribute('role', 'option');
           caixa.appendChild(div);
         });
         
@@ -752,7 +781,7 @@
       }
       
       if (!carregado) {
-        resultados.innerHTML = '';
+        resultados.innerHTML = '<div class="error">Carregando dados... Por favor, aguarde.</div>';
         return;
       }
       
@@ -813,6 +842,7 @@
         const mae = linha[2] || "Desconhecida";
         const ano = linha[3] || "Sem ano";
         const id = linha[4] || "Sem ID";
+        const comune = linha[5] || "Desconhecido";
         
         const msg = encodeURIComponent(
           `Olá, gostaria de um orçamento para o registro de ${nome} (ID: ${id})`
@@ -826,6 +856,7 @@
           <td>${mae}</td>
           <td>${ano}</td>
           <td>${id}</td>
+          <td>${comune}</td>
           <td>
             <a class="whatsapp-link" href="${wlink}" target="_blank" rel="noopener" title="Solicitar orçamento via WhatsApp">
               <img src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/whatsapp.png" alt="WhatsApp" style="width: 24px; height: 24px;">
@@ -839,6 +870,7 @@
       table.appendChild(tbody);
       resultados.innerHTML = `
         <h2>Resultados para "${termoPesquisa}" (${dadosFiltrados.length} registros)</h2>
+        <p>Clique no link do WhatsApp para solicitar um orçamento completo do registro.</p>
       `;
       resultados.appendChild(table);
     }
@@ -902,28 +934,19 @@
     
     // Contadores
     function updateCounters() {
-      // Contador de nomes e sobrenomes únicos
       if (carregado && dados.length > 0) {
-        const nomesUnicos = new Set(dados.map(item => item[0].toLowerCase().trim()));
+        // Contador de registros totais
+        document.getElementById('uniqueNamesCounter').textContent = dados.length.toLocaleString();
+        
+        // Contador de sobrenomes únicos
         const sobrenomesUnicos = new Set(dados.map(item => {
           const nomeCompleto = item[0].toLowerCase().trim();
           return nomeCompleto.split(' ')[0]; // Pega o primeiro nome como sobrenome
         }));
         
-        document.getElementById('uniqueNamesCounter').textContent = nomesUnicos.size.toLocaleString();
         document.getElementById('uniqueSurnamesCounter').textContent = sobrenomesUnicos.size.toLocaleString();
       }
     }
-    
-    // Chamar a função quando os dados forem carregados
-    document.addEventListener('DOMContentLoaded', function() {
-      const checkDataLoaded = setInterval(() => {
-        if (carregado) {
-          updateCounters();
-          clearInterval(checkDataLoaded);
-        }
-      }, 500);
-    });
   </script>
 </body>
 </html>
