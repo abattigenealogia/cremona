@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-i18n="appName">Pesquisa Cremona</title>
+  <title>Pesquisa Cremona</title>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"></noscript>
   <style>
     :root {
-      --primary: #000000;
+      --primary: #000000;  /* Alterado para preto */
       --secondary: #f9be18;
       --text: #333333;
       --light-bg: #f7f9fc;
@@ -18,13 +18,13 @@
       --error-bg: #ffebee;
       --sidebar-width: 250px;
     }
-
+    
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
+    
     body {
       font-family: 'Open Sans', sans-serif;
       background-color: var(--light-bg);
@@ -33,7 +33,8 @@
       display: flex;
       min-height: 100vh;
     }
-
+    
+    /* BARRA LATERAL */
     .sidebar {
       width: var(--sidebar-width);
       background-color: var(--primary);
@@ -45,21 +46,21 @@
       z-index: 100;
       box-shadow: 2px 0 5px rgba(0,0,0,0.1);
     }
-
+    
     .sidebar-header {
       text-align: center;
       padding: 0 20px 20px;
       border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-
+    
     .sidebar-header h2 {
       color: var(--secondary);
     }
-
+    
     .sidebar-menu {
       padding: 20px 0;
     }
-
+    
     .sidebar-link {
       display: flex;
       align-items: center;
@@ -70,103 +71,18 @@
       border-left: 4px solid transparent;
       margin: 5px 0;
     }
-
+    
     .sidebar-link:hover {
       background-color: rgba(255,255,255,0.1);
       border-left: 4px solid var(--secondary);
     }
-
+    
     .sidebar-link i {
       margin-right: 10px;
       width: 20px;
       text-align: center;
       font-style: normal;
     }
-
-    .language-switcher {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 200;
-    }
-
-    .language-switcher img {
-      width: 30px;
-      height: 20px;
-      margin-left: 10px;
-      cursor: pointer;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-    }
-
-    main {
-      margin-left: var(--sidebar-width);
-      padding: 20px;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Seletor de idioma -->
-  <div class="language-switcher">
-    <img src="https://flagcdn.com/w40/gb.png" alt="English" onclick="setLanguage('en')">
-    <img src="https://flagcdn.com/w40/br.png" alt="Português" onclick="setLanguage('pt')">
-  </div>
-
-  <!-- Barra lateral -->
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <h2 data-i18n="appName">Pesquisa Cremona</h2>
-    </div>
-    <div class="sidebar-menu">
-      <a href="#" class="sidebar-link"><i>🏠</i><span data-i18n="menu.home">Início</span></a>
-      <a href="#" class="sidebar-link"><i>📊</i><span data-i18n="menu.reports">Relatórios</span></a>
-      <a href="#" class="sidebar-link"><i>⚙️</i><span data-i18n="menu.settings">Configurações</span></a>
-    </div>
-  </div>
-
-  <!-- Conteúdo principal -->
-  <main>
-    <h1 data-i18n="title">Bem-vindo à Pesquisa Cremona</h1>
-    <p data-i18n="description">Explore os dados com facilidade.</p>
-  </main>
-
-  <!-- Script de tradução -->
-  <script>
-    const translations = {
-      en: {
-        appName: "Cremona Research",
-        title: "Welcome to Cremona Research",
-        description: "Explore the data with ease.",
-        "menu.home": "Home",
-        "menu.reports": "Reports",
-        "menu.settings": "Settings"
-      },
-      pt: {
-        appName: "Pesquisa Cremona",
-        title: "Bem-vindo à Pesquisa Cremona",
-        description: "Explore os dados com facilidade.",
-        "menu.home": "Início",
-        "menu.reports": "Relatórios",
-        "menu.settings": "Configurações"
-      }
-    };
-
-    function setLanguage(lang) {
-      localStorage.setItem("selectedLang", lang);
-      const elements = document.querySelectorAll('[data-i18n]');
-      elements.forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {
-          el.textContent = translations[lang][key];
-        }
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const lang = localStorage.getItem("selectedLang") || 'pt';
-      setLanguage(lang);
-    });
     
     /* CONTEÚDO PRINCIPAL */
     .main-content {
