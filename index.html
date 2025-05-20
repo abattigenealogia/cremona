@@ -9,11 +9,11 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"></noscript>
   <style>
     :root {
-      --primary: #002f5f;
+      --primary: #000000;  /* Alterado para preto */
       --secondary: #f9be18;
-      --text: #333;
+      --text: #333333;
       --light-bg: #f7f9fc;
-      --white: #fff;
+      --white: #ffffff;
       --error: #d32f2f;
       --error-bg: #ffebee;
       --sidebar-width: 250px;
@@ -151,7 +151,7 @@
     input[type="text"]:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(0,47,95,0.2);
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
     }
     
     .sugestoes {
@@ -260,12 +260,6 @@
       opacity: 0.8;
     }
     
-    .whatsapp-link svg {
-      width: 25px;
-      height: 25px;
-      fill: #25D366;
-    }
-    
     /* FOOTER */
     footer {
       background-color: var(--secondary);
@@ -289,7 +283,7 @@
     
     footer a:hover {
       text-decoration: underline;
-      color: #001f3f;
+      color: #000000;
     }
     
     /* CONTADORES */
@@ -336,7 +330,7 @@
     }
     
     .social-link:hover {
-      color: #001f3f;
+      color: #000000;
       transform: translateY(-2px);
     }
     
@@ -830,6 +824,7 @@
           <th>Ano</th>
           <th>ID</th>
           <th>Comune</th>
+          <th>Ação</th>
         </tr>
       `;
       table.appendChild(thead);
@@ -842,7 +837,7 @@
         const mae = linha[2] || "Desconhecida";
         const ano = linha[3] || "Sem ano";
         const id = linha[4] || "Sem ID";
-        const comune = linha[5] || "Desconhecido";
+        const comune = linha[5] || "Lugar Conhecido";
         
         const msg = encodeURIComponent(
           `Olá, gostaria de um orçamento para o registro de ${nome} (ID: ${id})`
