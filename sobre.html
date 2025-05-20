@@ -884,22 +884,6 @@
         sugestoes.classList.remove("visible");
       }
     });
-    
-    // Contadores
-    function updateCounters() {
-      if (carregado && dados.length > 0) {
-        // Contador de registros totais
-        document.getElementById('uniqueNamesCounter').textContent = dados.length.toLocaleString();
-        
-        // Contador de sobrenomes únicos
-        const sobrenomesUnicos = new Set(dados.map(item => {
-          const nomeCompleto = item[0].toLowerCase().trim();
-          return nomeCompleto.split(' ')[0]; // Pega o primeiro nome como sobrenome
-        }));
-        
-        document.getElementById('uniqueSurnamesCounter').textContent = sobrenomesUnicos.size.toLocaleString();
-      }
-    }
   </script>
 </body>
 </html>
