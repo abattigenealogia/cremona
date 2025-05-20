@@ -592,9 +592,6 @@
     </main>
 
     <footer>
-      <div class="counters">
-        <div class="counter-item">
-          <span id="visitCounter">0</span> visitas
         </div>
         <div class="counter-item">
           <span id="uniqueNamesCounter">0</span> registros cadastrados
@@ -905,12 +902,6 @@
     
     // Contadores
     function updateCounters() {
-      // Contador de visitas (usando localStorage)
-      let visitCount = localStorage.getItem('visitCount') || 0;
-      visitCount = parseInt(visitCount) + 1;
-      localStorage.setItem('visitCount', visitCount);
-      document.getElementById('visitCounter').textContent = visitCount.toLocaleString();
-      
       // Contador de nomes e sobrenomes únicos
       if (carregado && dados.length > 0) {
         const nomesUnicos = new Set(dados.map(item => item[0].toLowerCase().trim()));
