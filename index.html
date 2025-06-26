@@ -803,7 +803,7 @@
     }
 
     // Renderização dos resultados
-   function renderizarResultados(dadosFiltrados, termoPesquisa) {
+function renderizarResultados(dadosFiltrados, termoPesquisa) {
   const resultados = document.getElementById("resultados");
   resultados.innerHTML = ""; // limpa resultados anteriores
 
@@ -854,11 +854,11 @@
     tr.style.backgroundColor = index % 2 === 0 ? "#f9f9f9" : "#ffffff";
 
     tr.innerHTML = `
-      <td style="padding: 8px; border: 1px solid #ccc;">${nome}</td>
-      <td style="padding: 8px; border: 1px solid #ccc;">${pais}</td>
-      <td style="padding: 8px; border: 1px solid #ccc;">${ano}</td>
-      <td style="padding: 8px; border: 1px solid #ccc;">${id}</td>
-      <td style="padding: 8px; border: 1px solid #ccc;">${comune}</td>
+      <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${nome}</td>
+      <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${pais}</td>
+      <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${ano}</td>
+      <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${id}</td>
+      <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${comune}</td>
       <td style="padding: 8px; border: 1px solid #ccc;">
         <a href="${wlink}" target="_blank" rel="noopener" title="Solicitar orçamento via WhatsApp" style="text-decoration: none;">
           <button style="display: flex; align-items: center; gap: 6px; background-color: #25D366; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer;">
@@ -885,7 +885,7 @@
   resultados.appendChild(titulo);
   resultados.appendChild(aviso);
   resultados.appendChild(table);
-    }
+}
 
     // Funções para os Modais
     function abrirModal(id) {
