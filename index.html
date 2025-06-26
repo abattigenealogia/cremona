@@ -532,52 +532,52 @@
       </div>
     </header>
 
-    <main>
-      <label for="busca">Digite um sobrenome para iniciar a pesquisa:</label>
-      <div class="input-container">
-        <input 
-          type="text" 
-          id="busca" 
-          aria-label="Digite um sobrenome para pesquisa" 
-          aria-autocomplete="list" 
-          aria-controls="sugestoes"
-          oninput="sugerir()" 
-          placeholder="Ex: Abati, Rossi, Conti" 
-          autocomplete="off"
-          onkeydown="if(event.key === 'Enter') pesquisar()">
-        <div id="sugestoes" class="sugestoes" role="listbox"></div>
-      </div>
-      <button onclick="pesquisar()" id="btnPesquisar">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <span>Pesquisar</span>
-      </button>
+   <main style="width: 100%; margin: 0; padding: 0 20px; box-sizing: border-box;">
+  <label for="busca">Digite um sobrenome para iniciar a pesquisa:</label>
+  <div class="input-container">
+    <input 
+      type="text" 
+      id="busca" 
+      aria-label="Digite um sobrenome para pesquisa" 
+      aria-autocomplete="list" 
+      aria-controls="sugestoes"
+      oninput="sugerir()" 
+      placeholder="Ex: Abati, Rossi, Conti" 
+      autocomplete="off"
+      onkeydown="if(event.key === 'Enter') pesquisar()">
+    <div id="sugestoes" class="sugestoes" role="listbox"></div>
+  </div>
+  <button onclick="pesquisar()" id="btnPesquisar">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <span>Pesquisar</span>
+  </button>
 
-      <div id="resultados"></div>
+  <div id="resultados"></div>
+  
+  <div style="text-align: center; margin: 40px 0 0;">
+    <a href="https://raw.githubusercontent.com/abattigenealogia/cremona/main/mapa.cremona.svg" 
+       target="_blank"
+       style="text-decoration: none; color: inherit; display: inline-block;"
+       title="Abrir mapa interativo">
+       
+      <img 
+        src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/Cremona.png" 
+        alt="Mapa de Cremona" 
+        style="width: 100px; height: 100px; display: block; margin: 0 auto; object-fit: contain; cursor: pointer;"
+        onerror="this.src='https://via.placeholder.com/100x100?text=Cremona'"
+      >
       
-      <div style="text-align: center; margin: 40px 0 0;">
-        <a href="https://raw.githubusercontent.com/abattigenealogia/cremona/main/mapa.cremona.svg" 
-           target="_blank"
-           style="text-decoration: none; color: inherit; display: inline-block;"
-           title="Abrir mapa interativo">
-           
-          <img 
-            src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/Cremona.png" 
-            alt="Mapa de Cremona" 
-            style="width: 100px; height: 100px; display: block; margin: 0 auto; object-fit: contain; cursor: pointer;"
-            onerror="this.src='https://via.placeholder.com/100x100?text=Cremona'"
-          >
-          
-          <div style="margin-top: 4px;">
-            <div style="font-size: 16px; color: #333; line-height: 1.2;">Cremona</div>
-            <div style="font-size: 12px; color: #666; line-height: 1.2; margin-top: 2px;">(ver mapa)</div>
-          </div>
-        </a>
+      <div style="margin-top: 4px;">
+        <div style="font-size: 16px; color: #333; line-height: 1.2;">Cremona</div>
+        <div style="font-size: 12px; color: #666; line-height: 1.2; margin-top: 2px;">(ver mapa)</div>
       </div>
-    </main>
+    </a>
+  </div>
+</main>
 
     <footer>
       <div class="counters">
