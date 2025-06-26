@@ -804,88 +804,88 @@
 
     // Renderização dos resultados
 function renderizarResultados(dadosFiltrados, termoPesquisa) {
-      const resultados = document.getElementById("resultados");
-      resultados.innerHTML = ""; // limpa resultados anteriores
+  const resultados = document.getElementById("resultados");
+  resultados.innerHTML = ""; // limpa resultados anteriores
 
-      if (dadosFiltrados.length === 0) {
-        resultados.innerHTML = `
-          <h2>Nenhum resultado encontrado para "${termoPesquisa}".</h2>
-          <p>Tente verificar a ortografia ou use termos diferentes.</p>
-        `;
-        return;
-      }
+  // Verifica se há dados
+  if (dadosFiltrados.length === 0) {
+    resultados.innerHTML = `
+      <h2>Nenhum resultado encontrado para "${termoPesquisa}".</h2>
+      <p>Tente verificar a ortografia ou use termos diferentes.</p>
+    `;
+    return;
+  }
 
-      const titulo = document.createElement("h2");
-      titulo.textContent = `Resultados para "${termoPesquisa}" (${dadosFiltrados.length} registros)`;
+  // Cria a tabela
+  const table = document.createElement("table");
+  table.setAttribute("aria-label", `Resultados para ${termoPesquisa}`);
+  table.style.borderCollapse = "collapse";
+  table.style.width = "100%";
+  table.style.marginTop = "1em";
 
-      const aviso = document.createElement("p");
-      aviso.textContent = "Clique no link do WhatsApp para solicitar um orçamento completo do registro.";
-      aviso.className = "aviso";
+  // Cabeçalho da tabela
+  const thead = document.createElement("thead");
+  thead.innerHTML = `
+    <tr style="background-color: #ddd;">
+      <th scope="col">Nome</th>
+      <th scope="col">País</th>
+      <th scope="col">Ano</th>
+      <th scope="col">ID</th>
+      <th scope="col">Comune</th>
+      <th scope="col">Ação</th>
+    </tr>
+  `;
+  table.appendChild(thead);
 
-      const table = document.createElement("table");
-      table.setAttribute("aria-label", `Resultados para ${termoPesquisa}`);
-      table.style.borderCollapse = "collapse";
-      table.style.width = "100%";
-      table.style.marginTop = "1em";
+  // Corpo da tabela
+  const tbody = document.createElement("tbody");
 
-      const thead = document.createElement("thead");
-      thead.innerHTML = `
-        <tr style="background-color: #ddd;">
-          <th scope="col">Nome</th>
-          <th scope="col">País</th>
-          <th scope="col">Ano</th>
-          <th scope="col">ID</th>
-          <th scope="col">Comune</th>
-          <th scope="col">Ação</th>
-        </tr>
-      `;
-      table.appendChild(thead);
+  dadosFiltrados.forEach((linha, index) => {
+    const nome = linha[0] || "Sem nome";
+    const pais = linha[1] || "Desconhecido";
+    const ano = linha[2] || "Sem ano";
+    const id = linha[3] || "Sem ID";
+    const comune = linha[5] || "Lugar conhecido";
 
-      const tbody = document.createElement("tbody");
+    const msg = encodeURIComponent(`Olá, gostaria de um orçamento para o registro de ${nome} (ID: ${id})`);
+    const wlink = `https://api.whatsapp.com/send?phone=5545920027919&text=${msg}`;
 
-      dadosFiltrados.forEach((linha, index) => {
-        const nome = linha[0] || "Sem nome";
-        const pais = linha[1] || "Desconhecido";
-        const ano = linha[2] || "Sem ano";
-        const id = linha[3] || "Sem ID";
-        const comune = linha[5] || "Lugar conhecido";
+    const tr = document.createElement("tr");
+    tr.style.backgroundColor = index % 2 === 0 ? "#f9f9f9" : "#ffffff";
 
-        const msg = encodeURIComponent(`Olá, gostaria de um orçamento para o registro de ${nome} (ID: ${id})`);
-        const wlink = `https://api.whatsapp.com/send?phone=5545920027919&text=${msg}`;
+    tr.innerHTML = `
+      <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${nome}</td>
+      <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${pais}</td>
+      <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${ano}</td>
+      <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${id}</td>
+      <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${comune}</td>
+      <td style="padding: 8px; border: 1px solid #ccc;">
+        <a href="${wlink}" target="_blank" rel="noopener" title="Solicitar orçamento via WhatsApp" style="text-decoration: none;">
+          <button style="display: flex; align-items: center; gap: 6px; background-color: #25D366; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer;">
+            <img src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/whatsapp.png" alt="WhatsApp" style="width: 20px; height: 20px;">
+            SolicitarOrçamento
+          </button>
+        </a>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
 
-        const tr = document.createElement("tr");
-        tr.style.backgroundColor = index % 2 === 0 ? "#f9f9f9" : "#ffffff";
+  table.appendChild(tbody);
 
-        tr.innerHTML = `
-          <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${nome}</td>
-          <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${pais}</td>
-          <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${ano}</td>
-          <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${id}</td>
-          <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${comune}</td>
-          <td style="padding: 8px; border: 1px solid #ccc;">
-            <a href="${wlink}" target="_blank" rel="noopener" title="Solicitar orçamento via WhatsApp" style="text-decoration: none;">
-              <button style="display: flex; align-items: center; gap: 6px; background-color: #25D366; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer;">
-                <img src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/whatsapp.png" alt="WhatsApp" style="width: 20px; height: 20px;">
-                SolicitarOrçamento
-              </button>
-            </a>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
+  // Cabeçalho de resultados
+  const titulo = document.createElement("h2");
+  titulo.textContent = `Resultados para "${termoPesquisa}" (${dadosFiltrados.length} registros)`;
 
-      table.appendChild(tbody);
+  const aviso = document.createElement("p");
+  aviso.textContent = "Clique no link do WhatsApp para solicitar um orçamento completo do registro.";
+  aviso.style.color = "red";
+  aviso.style.fontWeight = "bold";
 
-      // Wrapper para scroll horizontal
-      const wrapper = document.createElement("div");
-      wrapper.style.overflowX = "auto";
-      wrapper.style.width = "100%";
-      wrapper.appendChild(table);
-
-      resultados.appendChild(titulo);
-      resultados.appendChild(aviso);
-      resultados.appendChild(wrapper);
-    }
+  resultados.appendChild(titulo);
+  resultados.appendChild(aviso);
+  resultados.appendChild(table);
+}
 
     // Funções para os Modais
     function abrirModal(id) {
