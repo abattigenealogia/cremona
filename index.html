@@ -815,7 +815,6 @@ function renderizarResultados(dadosFiltrados, termoPesquisa) {
         return;
       }
 
-      // Cabeçalho de resultados
       const titulo = document.createElement("h2");
       titulo.textContent = `Resultados para "${termoPesquisa}" (${dadosFiltrados.length} registros)`;
 
@@ -823,14 +822,15 @@ function renderizarResultados(dadosFiltrados, termoPesquisa) {
       aviso.textContent = "Clique no link do WhatsApp para solicitar um orçamento completo do registro.";
       aviso.className = "aviso";
 
-      // Cria a tabela
       const table = document.createElement("table");
       table.setAttribute("aria-label", `Resultados para ${termoPesquisa}`);
+      table.style.borderCollapse = "collapse";
+      table.style.width = "100%";
+      table.style.marginTop = "1em";
 
-      // Cabeçalho da tabela
       const thead = document.createElement("thead");
       thead.innerHTML = `
-        <tr>
+        <tr style="background-color: #ddd;">
           <th scope="col">Nome</th>
           <th scope="col">País</th>
           <th scope="col">Ano</th>
@@ -841,7 +841,6 @@ function renderizarResultados(dadosFiltrados, termoPesquisa) {
       `;
       table.appendChild(thead);
 
-      // Corpo da tabela
       const tbody = document.createElement("tbody");
 
       dadosFiltrados.forEach((linha, index) => {
@@ -855,17 +854,18 @@ function renderizarResultados(dadosFiltrados, termoPesquisa) {
         const wlink = `https://api.whatsapp.com/send?phone=5545920027919&text=${msg}`;
 
         const tr = document.createElement("tr");
+        tr.style.backgroundColor = index % 2 === 0 ? "#f9f9f9" : "#ffffff";
 
         tr.innerHTML = `
-          <td>${nome}</td>
-          <td>${pais}</td>
-          <td>${ano}</td>
-          <td>${id}</td>
-          <td>${comune}</td>
-          <td>
-            <a href="${wlink}" target="_blank" rel="noopener" title="Solicitar orçamento via WhatsApp" style="text-decoration:none;">
-              <button>
-                <img src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/whatsapp.png" alt="WhatsApp">
+          <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${nome}</td>
+          <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${pais}</td>
+          <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${ano}</td>
+          <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${id}</td>
+          <td style="padding: 8px; border: 1px solid #ccc; white-space: nowrap;">${comune}</td>
+          <td style="padding: 8px; border: 1px solid #ccc;">
+            <a href="${wlink}" target="_blank" rel="noopener" title="Solicitar orçamento via WhatsApp" style="text-decoration: none;">
+              <button style="display: flex; align-items: center; gap: 6px; background-color: #25D366; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer;">
+                <img src="https://raw.githubusercontent.com/abattigenealogia/cremona/main/whatsapp.png" alt="WhatsApp" style="width: 20px; height: 20px;">
                 SolicitarOrçamento
               </button>
             </a>
